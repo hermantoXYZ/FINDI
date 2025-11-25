@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,29 +20,28 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n-ld$&yy84riz7qa*jdztueb9)-_8&7t9j^n^v+fpy82o*s*@j'
+SECRET_KEY = 'django-insecure-3#3$_3tdlxr$&xk&5it!g9k1)9&pu)3_w4$md(7#q@#ih#67@b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.losaripost.com', 'losaripost.com']
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app',
+    'django_summernote',
+    'import_export',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -56,7 +55,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,6 +63,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'app.context_processors.web_name',
+                'django.template.context_processors.i18n',
+                'app.context_processors.versioned_static', #saya tambahkan untuk version stylesnya
             ],
         },
     },
@@ -79,8 +81,21 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'losh8327_losaripost', 
+#         'USER': 'losh8327_losari', 
+#         'PASSWORD': 'SEHATSELALU', 
+#         'HOST': 'localhost',
+#         'PORT': '3306', 
+#     }
+# }
+
 
 
 # Password validation
@@ -107,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Makassar'
 
 USE_I18N = True
 
@@ -117,9 +132,65 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# ln -s /home/losh8327/losaripost/static /home/losh8327/public_html/static
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Konfigurasi Media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'  
+
+# ln -s /home/losh8327/losaripost/media /home/losh8327/public_html/media
+
+LOGOUT_REDIRECT_URL = '/login'
+
+
+
+SUMMERNOTE_THEME = 'bs4'
+
+SUMMERNOTE_CONFIG = {
+    # Gunakan iframe untuk menghindari konflik CSS
+    'iframe': True,
+    'airMode': False,
+    # Atur ukuran editor
+    'summernote': {
+        'width': '100%',
+        'height': '400px',
+    },
+
+    # Toolbar customization
+        # https://summernote.org/deep-dive/#custom-toolbar-popover
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+            ['history', ['undo', 'redo']],
+            ['heading', ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']],
+            ['fontsize', ['fontsize']],
+            ['hr', ['hr']],
+            ['textstyle', ['superscript', 'subscript']],
+            ['textstyle', ['textstyle']],
+        
+        ],
+
+    # Opsi lainnya, seperti file upload
+    'attachment_require_authentication': True,  # Hanya user login yang bisa upload
+}
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024  # 20 MB

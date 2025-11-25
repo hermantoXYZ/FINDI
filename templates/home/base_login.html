@@ -1,0 +1,58 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ webname }} | {{ title }}</title>
+    <link rel="stylesheet" href="/static/style.css?v={{ STATIC_VERSION }}"> 
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+</head>
+<body class="login-page">
+    
+    <div class="alert2-container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert2 alert2-{{ message.tags }}">
+                    <i class="{% if message.tags == 'success' %}ri-checkbox-circle-line{% elif message.tags == 'warning' %}ri-alert-line{% elif message.tags == 'info' %}ri-information-line{% else %}ri-error-warning-line{% endif %}"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+	{% block content %}
+
+	{% endblock content %}
+    <!-- Login Page -->
+
+<!-- IF diperlukan saja/Dark Mode -->
+
+    <script>
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert2');
+            alerts.forEach(alert => {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 4000); // hilang setelah 4 detik
+    </script>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        toggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+<!-- IF diperlukan saja /Dark Mode -->
+</body>
+</html>

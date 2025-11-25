@@ -1,0 +1,405 @@
+{% extends "dosen/base.html" %}
+{% block content1 %}
+<div class="dashboard-content">
+    <div class="form-card">
+        <div class="form-header">
+            <div class="form-header-icon">
+                <i class="ri-edit-line"></i>
+            </div>
+            <div class="form-header-content">
+                <h2>Edit Mata Kurikulum</h2>
+                <p>Silahkan update form dibawah ini untuk mengedit mata kurikulum.</p>
+            </div>
+        </div>
+        <form method="post" enctype="multipart/form-data" class="layanan-form">
+            {% csrf_token %}
+            <div class="form-row">
+            <div class="form-group">
+                <label for="{{ form.nama_mata_kuliah.id_for_label }}">Nama Mata Kurikulum <span class="required">*</span></label>
+                {{ form.nama_mata_kuliah }}
+                {% if form.nama_mata_kuliah.errors %}
+                    <div class="error-message">
+                        {% for error in form.nama_mata_kuliah.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.prodi.id_for_label }}">Prodi <span class="required">*</span></label>
+                {{ form.prodi }}
+                {% if form.prodi.errors %}
+                    <div class="error-message">
+                        {% for error in form.prodi.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.kode_mata_kuliah.id_for_label }}">Kode Mata Kuliah <span class="required">*</span></label>
+                    {{ form.kode_mata_kuliah }}
+                    {% if form.kode_mata_kuliah.errors %}
+                        <div class="error-message">
+                            {% for error in form.kode_mata_kuliah.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.sks_teori.id_for_label }}">SKS Teori <span class="required">*</span></label>
+                    {{ form.sks_teori }}
+                    {% if form.sks_teori.errors %}
+                        <div class="error-message">
+                            {% for error in form.sks_teori.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.sks_praktik.id_for_label }}">SKS Praktik <span class="required">*</span></label>
+                    {{ form.sks_praktik }}
+                    {% if form.sks_praktik.errors %}
+                        <div class="error-message">
+                            {% for error in form.sks_praktik.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.semester.id_for_label }}">Semester <span class="required">*</span></label>
+                    {{ form.semester }}
+                    {% if form.semester.errors %}
+                        <div class="error-message">
+                            {% for error in form.semester.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.jenis.id_for_label }}">Jenis <span class="required">*</span></label>
+                    {{ form.jenis }}
+                    {% if form.jenis.errors %}
+                        <div class="error-message">
+                            {% for error in form.jenis.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+           
+           <div class="form-row">
+            <div class="form-group">
+                <label for="{{ form.deskripsi_singkat.id_for_label }}">Deskripsi Singkat Mata Kuliah <span class="required">*</span></label>
+                {{ form.deskripsi_singkat }}
+                {% if form.deskripsi_singkat.errors %}
+                    <div class="error-message">
+                        {% for error in form.deskripsi_singkat.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form_rps.cpmk.id_for_label }}">Deskripsi Capaian Pembelajaran Mata Kuliah (CPMK)</label>
+                {{ form_rps.cpmk }}
+                {% if form_rps.cpmk.errors %}
+                    <div class="error-message">
+                        {% for error in form_rps.cpmk.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+            <div class="form-row">
+            <div class="form-group">
+                <label for="{{ form.dosen_pengampu.id_for_label }}">Dosen Pengampu <span class="required">*</span></label>
+                {{ form.dosen_pengampu }}
+                {% if form.dosen_pengampu.errors %}
+                    <div class="error-message">
+                        {% for error in form.dosen_pengampu.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form_rps.dosen_pengembang_rps.id_for_label }}">Dosen Pengembang RPS</label>
+                {{ form_rps.dosen_pengembang_rps }}
+                {% if form_rps.dosen_pengembang_rps.errors %}
+                    <div class="error-message">
+                        {% for error in form_rps.dosen_pengembang_rps.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form_rps.koordinator_rmk.id_for_label }}">Koordinator RMK</label>
+                    {{ form_rps.koordinator_rmk }}
+                    {% if form_rps.koordinator_rmk.errors %}
+                        <div class="error-message">
+                            {% for error in form_rps.koordinator_rmk.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form_rps.ketua_prodi.id_for_label }}">Ketua Prodi</label>
+                    {{ form_rps.ketua_prodi }}
+                    {% if form_rps.ketua_prodi.errors %}
+                        <div class="error-message">
+                            {% for error in form_rps.ketua_prodi.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+                <div class="form-group">
+                    <label for="{{ form_rps.cpl_prodi.id_for_label }}">Capaian Pembelajaran Lulusan</label>
+                    {{ form_rps.cpl_prodi }}
+                    {% if form_rps.cpl_prodi.errors %}
+                        <div class="error-message">
+                            {% for error in form_rps.cpl_prodi.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            <div class="form-group">
+                <label for="{{ form_rps.bahan_kajian.id_for_label }}">Bahan Kajian</label>
+                {{ form_rps.bahan_kajian }}
+                {% if form_rps.bahan_kajian.errors %}
+                    <div class="error-message">
+                        {% for error in form_rps.bahan_kajian.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <!-- Tampilkan List Pustaka yang Sudah Ada -->
+            <div class="form-group">
+                <div>
+                    <button type="button" class="btn primary small" onclick="openModal('tambah_pustaka')">
+                        <i class="ri-add-line"></i>
+                        Tambah Pustaka
+                    </button>
+                </div>
+                {% if rps.pustaka.all %}
+                    <div class="pustaka-list">
+                        <!-- Pustaka Utama -->
+                        {% if rps.pustaka.all|dictsort:"jenis" %}
+                            <div class="pustaka-category">
+                                <h4 style="color: #4CAF50; margin-bottom: 15px; font-weight: 600;">
+                                    <i class="ri-book-line"></i> Pustaka Utama
+                                </h4>
+                                {% for pustaka in rps.pustaka.all|dictsort:"jenis" %}
+                                    {% if pustaka.jenis == 'utama' %}
+                                        <div class="pustaka-item-display">
+                                            <div class="pustaka-content">
+                                                <div class="pustaka-description">{{ pustaka.deskripsi_pustaka|linebreaks }}</div>
+                                            </div>
+                                            
+                                    <!-- <button type="button" class="btn danger small delete-pustaka-btn" 
+                                            data-pustaka-id="{{ pustaka.id }}">
+                                        <i class="ri-delete-bin-line"></i>
+                                        Hapus
+                                    </button> -->
+                                    <a href="?edit_pustaka_id={{ pustaka.id }}" class="btn primary small">
+                                        <i class="ri-edit-line"></i> Edit
+                                    </a>
+                                            
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Pustaka Pendukung -->
+                        {% if rps.pustaka.all|dictsort:"jenis" %}
+                            <div class="pustaka-category">
+                                <h4 style="color: #2196F3; margin-bottom: 15px; font-weight: 600;">
+                                    <i class="ri-book-open-line"></i> Pustaka Pendukung
+                                </h4>
+                                {% for pustaka in rps.pustaka.all|dictsort:"jenis" %}
+                                    {% if pustaka.jenis == 'pendukung' %}
+                                        <div class="pustaka-item-display">
+                                            <div class="pustaka-content">
+                                                <div class="pustaka-description">{{ pustaka.deskripsi_pustaka|linebreaks }}</div>
+                                            </div>
+                                            <!-- <button type="button" class="btn danger small delete-pustaka-btn" 
+                                            data-pustaka-id="{{ pustaka.id }}">
+                                        <i class="ri-delete-bin-line"></i>
+                                        Hapus
+                                    </button> -->
+                                    <a href="?edit_pustaka_id={{ pustaka.id }}" class="btn primary small">
+                                        <i class="ri-edit-line"></i> Edit
+                                    </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon">
+                            <i class="ri-book-line"></i>
+                        </div>
+                        <p style="text-align: center; color: #6c757d; margin: 20px 0;">Belum ada pustaka yang ditambahkan</p>
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="edit_link_rps" style="text-align: left;"><span class="required"></span><span style="font-size: 12px; background-color: #4CAF50; color: #ffffff;">Upload Link RPS Mode Share (Link RPS)</span></label>
+                    {{ form_rps.link_rps }}
+                    {% if form_rps.link_rps.errors %}
+                        <div class="error-message">
+                            {% for error in form_rps.link_rps.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <button type="submit" class="btn primary">Simpan Data</button>
+
+            <!-- MODAL TAMBAH PUSTAKA -->
+            <div id="tambah_pustaka" class="modal-edit">
+                <div class="modal-content-edit modal-large">
+                    <span class="close" onclick="closeModal('tambah_pustaka')">&times;</span>
+                    <div class="modal-header">
+                        <div class="modal-title">
+                            <h2>Tambah Pustaka</h2>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ pustaka_formset.management_form }}
+                        <div id="pustaka-container">
+                            {% for form_pustaka in pustaka_formset %}
+                                <div class="pustaka-item" data-form-index="{{ forloop.counter0 }}">
+                                    <!-- Hidden fields -->
+                                    {% for hidden in form_pustaka.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+                                                
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label style="font-weight: 600; text-align: left;">Jenis Pustaka</label>
+                                            {{ form_pustaka.jenis }}
+                                            {% if form_pustaka.jenis.errors %}
+                                                <div class="error-message">
+                                                    {% for error in form_pustaka.jenis.errors %}
+                                                        <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            <label style="font-weight: 600; text-align: left;">Deskripsi Pustaka</label>
+                                            {{ form_pustaka.deskripsi_pustaka }}
+                                            {% if form_pustaka.deskripsi_pustaka.errors %}
+                                                <div class="error-message">
+                                                    {% for error in form_pustaka.deskripsi_pustaka.errors %}
+                                                        <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="btn primary" style="margin-top: 20px;">Tambahkan..</button>
+                    </div>
+                </div>
+            </div>
+</form>
+{% if pustaka_edit_form %}
+<div id="edit_pustaka" class="modal-edit" style="display:block;">
+    <div class="modal-content-edit">
+        <span class="close" onclick="window.location.href='{{ request.path }}'">&times;</span>
+        <div class="modal-header">
+            <div class="modal-title">
+                <h2>Edit Pustaka</h2>
+            </div>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="edit_pustaka_id" value="{{ edit_pustaka_id }}">
+            <div class="form-group">
+                <label for="edit_jenis_pustaka" style="font-weight: 600; text-align: left;">Jenis Pustaka</label>
+                {{ pustaka_edit_form.jenis }}
+                {% if pustaka_edit_form.jenis.errors %}
+                    <div class="error-message">
+                        {% for error in pustaka_edit_form.jenis.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="edit_deskripsi_pustaka" style="font-weight: 600; text-align: left;">Deskripsi Pustaka</label>
+                {{ pustaka_edit_form.deskripsi_pustaka }}
+                {% if pustaka_edit_form.deskripsi_pustaka.errors %}
+                    <div class="error-message">
+                        {% for error in pustaka_edit_form.deskripsi_pustaka.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn secondary" onclick="closeModal('edit_pustaka')">Batal</button>
+                <button type="submit" class="btn primary">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>
+ <div id="edit_pustaka" class="modal-edit">
+                <div class="modal-content-edit">
+                    <span class="close" onclick="closeModal('edit_pustaka')">&times;</span>
+                    <div class="modal-header">
+                        <div class="modal-title">
+                            <h2>Edit Pustaka</h2>
+                        </div>
+                    </div>
+                    <form id="edit_pustaka_form" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" id="edit_pustaka_id" name="pustaka_id">
+                        <div class="form-group">
+                            <label for="edit_jenis_pustaka" style="font-weight: 600; text-align: left;">Jenis Pustaka</label>
+                            <select id="edit_jenis_pustaka" name="jenis" class="form-control" required>
+                                <option value="">Pilih Jenis Pustaka</option>
+                                <option value="utama">Utama</option>
+                                <option value="pendukung">Pendukung</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_deskripsi_pustaka" style="font-weight: 600; text-align: left;">Deskripsi Pustaka</label>
+                            <textarea id="edit_deskripsi_pustaka" name="deskripsi_pustaka" class="form-control" rows="3" 
+                                      placeholder="Contoh: Dave Chaffey. 2011. Digital Business and e-Commerce..." required></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn secondary" onclick="closeModal('edit_pustaka')">Batal</button>
+                            <button type="submit" class="btn primary">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{% endif %}
+</div>  
+</div>
+{% endblock %}

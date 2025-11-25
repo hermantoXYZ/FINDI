@@ -1,0 +1,169 @@
+{% extends "admin_managed/base.html" %}
+{% block content1 %}
+
+<div class="dashboard-content">
+    <div class="form-card">
+        <div class="form-header">
+            <div class="form-header-icon">
+                <i class="ri-edit-line"></i>
+            </div>
+            <div class="form-header-content">
+                <h2>Edit Artikel</h2>
+                <p>Silahkan update form dibawah ini untuk mengedit artikel.</p>
+            </div>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="layanan-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Title<span class="required">*</span></label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="error-message">
+                        {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.slug.id_for_label }}">Slug <span class="required">*</span></label>
+                {{ form.slug }}
+                {% if form.slug.errors %}
+                    <div class="error-message">
+                        {% for error in form.slug.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <small class="form-help">URL-friendly version of the title (e.g., "about-us" for "About Us")</small>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="{{ form.category.id_for_label }}">Category <span class="required">*</span></label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                        <div class="error-message">
+                            {% for error in form.category.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <small class="form-help">Pilih kategori artikel</small>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.topic.id_for_label }}">Topik Artikel <span class="required">*</span></label>
+                    {{ form.topic }}
+                    {% if form.topic.errors %}
+                        <div class="error-message">
+                            {% for error in form.topic.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.content.id_for_label }}">Content (Bahasa Indonesia) <span class="required">*</span></label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                    <div class="error-message">
+                        {% for error in form.content.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <small class="form-help">Isi konten artikel dalam Bahasa Indonesia (default)</small>
+            </div>
+           <div class="form-group">
+    <label for="{{ form.featured_image.id_for_label }}">Featured Image</label>
+    {{ form.featured_image }}
+    
+    <!-- Preview image -->
+    <div id="image-preview-container" style="margin-top: 10px;">
+        {% if form.instance.featured_image %}
+            <img id="image-preview" src="{{ form.instance.featured_image.url }}" alt="Preview" style="max-width: 200px; border-radius: 8px;">
+        {% else %}
+            <img id="image-preview" src="" alt="Preview" style="display:none; max-width: 200px; border-radius: 8px;">
+        {% endif %}
+    </div>
+
+    {% if form.featured_image.errors %}
+        <div class="error-message">
+            {% for error in form.featured_image.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <small class="form-help">Upload gambar untuk artikel (opsional)</small>
+</div>
+<div class="form-group">
+                <label for="{{ form.caption_image.id_for_label }}">Caption Image</label>
+                {{ form.caption_image }}
+                {% if form.caption_image.errors %}
+                    <div class="error-message">
+                        {% for error in form.caption_image.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <small class="form-help">Masukkan keterangan gambar (opsional)</small>
+            </div>
+            <div class="form-row">
+             <div class="form-group col-md-6">
+                    <label for="{{ form.created_at.id_for_label }}">Published Date</label>
+                    {{ form.created_at }}
+                    {% if form.created_at.errors %}
+                        <div class="error-message">
+                            {% for error in form.created_at.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <small class="form-help">Tanggal publikasi artikel (opsional)</small>
+                </div>
+            <div class="form-group">
+                <label for="{{ form.status.id_for_label }}">Status</label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <div class="error-message">
+                        {% for error in form.status.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            </div>
+             <div class="form-check">
+                {{ form.is_headline }}
+                <label class="form-check-label" for="{{ form.is_headline.id_for_label }}">
+                    Tampilkan di Headline
+                </label>
+            </div> 
+            
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="ri-save-line"></i>
+                    Simpan Perubahan
+                </button>
+                <a href="{% url 'app:article_list' %}" class="btn btn-secondary">
+                    <i class="ri-arrow-left-line"></i>
+                    Kembali ke Daftar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script_costum %}
+<!-- Summernote Script -->
+{{ form.media }}
+{% endblock %} 

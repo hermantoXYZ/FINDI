@@ -1,0 +1,350 @@
+{% extends 'home/base.html' %}
+{% block title %}Topik {{ topic.name }} - {{ webname }}{% endblock %}
+{% block meta %}
+    <meta name="description" content="Berita dari kategori {{ topic.name }} di {{ webname }}. Dapatkan informasi terkini dan mendalam seputar {{ topic.name }}.">
+    <meta name="keywords" content="Tegas, Cepat, Berimbang, Berita Makassar, Berita Indonesia, {{ topic.name }}, {{ topic.name }} terkini, berita terbaru {{ topic.name }}">
+    <meta name="author" content="LosariPost.com">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+{% endblock %}
+{% block content %}
+<main class="main-grid">
+<div class="main-content">
+    <section class="hero-slider">
+                    <h2>TOPIK: <em style="color: #ff8c00;">{{ topic.name|upper }}</em></h2>
+                    <div class="slider-container">
+                        <div class="slides">
+                            {% for artikel in popular_articles %}
+                            <article class="slide">
+                                <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}">
+                                <div class="slide-content">
+                                    <h3><a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">{{ artikel.title }}</a></h3>
+                                </div>
+                            </article>
+                            {% endfor %}
+                        </div>
+                        <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </section>
+                <section class="latest-news">
+                    <h2>TOPIK: <em style="color: #ff8c00;">{{ topic.name|upper }}</em></h2>
+                    <div class="news-list">
+        {% if articles %}
+        {% for article in articles %}
+                <article class="news-item">
+                {% if article.featured_image %}
+                <img src="{{ article.featured_image.url }}" alt="{{ article.title }}">
+                {% else %}
+                {% endif %}
+                            <div class="news-content">
+                                <div class="news-meta">
+                                    <span class="category"><a href="{% url 'category_articles' article.category.slug %}">{{ article.category|upper }}</a></span>
+                                    <span class="date">{{ article.created_at|date:'d F Y' }}</span>
+                                </div>
+                                <h3><a href="{% url 'article_detail' category_slug=article.category.slug unique_id=article.unique_id slug=article.slug %}">{{ article.title }}</a></h3>
+                            </div>
+                        </article>
+        {% endfor %}
+        {% else %}
+        <p>Tidak ada artikel</p>
+        {% endif %}
+    </div>
+</section>
+</div> 
+<!-- SIDEBAR -->      
+<aside class="sidebar">
+                <section class="nasional">
+                    <h2>MAKASSAR RAYA</h2>
+                    <ul>
+                        {% for artikel in makassar_raya_articles %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}">
+                            <div class="news-content">
+                                <p>
+                                    <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                        {{ artikel.title|truncatechars:80 }}
+                                    </a>
+                                </p>
+                                <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+
+                 <section class="nasional">
+                    <h2>CELEBES VOICE</h2>
+                    <ul>
+                        {% for artikel in celebes_voice_articles %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}">
+                            <div class="news-content">
+                                <p>
+                                    <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                        {{ artikel.title|truncatechars:80 }}
+                                    </a>
+                                </p>
+                                <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="populars">
+                    <h2>POPULERS</h2>
+                    <ol class="popular-list">
+                        {% if popular_article %}
+                            {% for artikel in popular_article %}
+                                <li>
+                                    <p>
+                                        <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                            {{ artikel.title|truncatechars:80 }}
+                                        </a>
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li><p>Tidak ada artikel populer saat ini.</p></li>
+                        {% endif %}
+                    </ol>
+                </section>
+                <section class="daerah">
+                    <h2>POLITIK</h2>
+                    <ul>
+                        {% for artikel in politik %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="Daerah 1">
+                            <div class="news-content">
+                            <p>
+                                        <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                            {{ artikel.title|truncatechars:80 }}
+                                        </a>
+                                    </p>
+                                    <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper }}
+                                    </span>
+                                </div>
+                                </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="daerah">
+                    <h2>DAERAH</h2>
+                    <ul>
+                        {% for artikel in daerah_articles %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="Daerah 1">
+                            <div class="news-content">
+                            <p>
+                                        <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                            {{ artikel.title|truncatechars:80 }}
+                                        </a>
+                                    </p>
+                                    <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper }}
+                                    </span>
+                                </div>
+                                </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="nasional">
+                    <h2>HUKUM</h2>
+                    <ul>
+                        {% for artikel in hukum_articles %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}">
+                            <div class="news-content">
+                                <p>
+                                    <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                        {{ artikel.title|truncatechars:80 }}
+                                    </a>
+                                </p>
+                                <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="nasional">
+                    <h2>NEWS</h2>
+                    <ul>
+                        {% for artikel in news %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}">
+                            <div class="news-content">
+                                <p>
+                                    <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                        {{ artikel.title|truncatechars:80 }}
+                                    </a>
+                                </p>
+                                <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="nasional">
+                    <h2>INSPIRASI NUSANTARA</h2>
+                    <ul>
+                        {% for artikel in inspirasi_nusantara_articles %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}">
+                            <div class="news-content">
+                                <p>
+                                    <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                        {{ artikel.title|truncatechars:80 }}
+                                    </a>
+                                </p>
+                                <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper|truncatechars:10 }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="nasional">
+                    <h2>LENSA BUDAYA</h2>
+                    <ul>
+                        {% for artikel in lensa_budaya_articles %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}">
+                            <div class="news-content">
+                                <p>
+                                    <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                        {{ artikel.title|truncatechars:80 }}
+                                    </a>
+                                </p>
+                                <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper|truncatechars:10 }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="nasional">
+                    <h2>SPORT & HIBURAN</h2>
+                    <ul>
+                        {% for artikel in sport_hiburan_articles %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}">
+                            <div class="news-content">
+                                <p>
+                                    <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                        {{ artikel.title|truncatechars:80 }}
+                                    </a>
+                                </p>
+                                <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper|truncatechars:10 }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="nasional">
+                    <h2>TEKNOLOGI</h2>
+                    <ul>
+                        {% for artikel in teknologi_articles %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}">
+                            <div class="news-content">
+                                <p>
+                                    <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                        {{ artikel.title|truncatechars:80 }}
+                                    </a>
+                                </p>
+                                <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper|truncatechars:10 }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="categories">
+                    <h2>Kategori</h2>
+                    <ul class="category-list">
+                        {% if category_list %}
+                        {% for ini_variabel_sementara_kategori in category_list %}
+                        <li><a href="{% url 'category_articles' ini_variabel_sementara_kategori.slug %}">{{ ini_variabel_sementara_kategori.name }} <span class="count">{{ ini_variabel_sementara_kategori.article_count }}</span></a></li>
+                        {% endfor %}
+                        {% endif %}
+                    </ul>
+        </section>
+<section class="footers">
+    <p>&copy; 2025 LosariPost. All rights reserved.</p>
+    <a href="/page/kontak">Kontak</a> |
+    <a href="/page/tentang-kami">Tentang Kami</a> |
+    <a href="/page/pedoman-media-siber">Pedoman Media Siber</a> |
+    <a href="/page/redaksi">Redaksi</a>
+</section>
+</aside> 
+<!-- SIDEBAR -->
+</main>
+{% endblock %}
+
+
+

@@ -1,0 +1,75 @@
+{% extends "admin_managed/base.html" %}
+{% block content1 %}
+
+<div class="dashboard-content">
+    <div class="form-card">
+        <div class="form-header">
+            <div class="form-header-icon">
+                <i class="ri-edit-line"></i>
+            </div>
+            <div class="form-header-content">
+                <h2>Edit Page</h2>
+                <p>Silahkan update form dibawah ini untuk mengedit page.</p>
+            </div>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="layanan-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Title (Bahasa Indonesia) <span class="required">*</span></label>
+                {{ form.title }}
+                {% if form.title_ind.errors %}
+                    <div class="error-message">
+                        {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.slug.id_for_label }}">Slug <span class="required">*</span></label>
+                {{ form.slug }}
+                {% if form.slug.errors %}
+                    <div class="error-message">
+                        {% for error in form.slug.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <small class="form-help">URL-friendly version of the title (e.g., "about-us" for "About Us")</small>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.content.id_for_label }}">Content (Bahasa Indonesia) <span class="required">*</span></label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                    <div class="error-message">
+                        {% for error in form.content.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <small class="form-help">Isi konten page dalam Bahasa Indonesia (default)</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="ri-save-line"></i>
+                    Simpan Perubahan
+                </button>
+                <a href="{% url 'app:page_list' %}" class="btn btn-secondary">
+                    <i class="ri-arrow-left-line"></i>
+                    Kembali ke Daftar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script_costum %}
+<!-- Summernote Script -->
+{{ form.media }}
+{% endblock %}

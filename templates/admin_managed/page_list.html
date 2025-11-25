@@ -1,0 +1,95 @@
+{% extends "admin_managed/base.html" %}
+
+{% block content1 %}
+
+<div class="dashboard-content">
+	<div class="student-list-container">
+		<div class="list-header">
+			<div class="list-title">
+				<h2>{{ heading }}</h2>
+				<p>{{web_name}}</p>
+			</div>
+		</div>
+		<div class="list-filters">
+			<div class="table-actions">
+				<div class="action-group">
+					<a href="{% url 'app:page_create' %}">
+						<button class="btn primary small">
+							<i class="ri-add-line"></i>
+							<span>Add</span>
+						</button>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		
+
+		<div class="student-table">
+			<table id="layananTable" class="display" style="width:100%">
+				<thead>
+				<tr>
+					<th>No</th>
+					<th>Title</th>
+					<th>Slug</th>
+					<th>Author</th>
+					<th>Created At</th>
+					<th>Aksi</th>
+				</tr>
+				</thead>
+				<tfoot>
+				<tr>
+					<th>No</th>
+					<th>Title</th>
+					<th>Slug</th>
+					<th>Author</th>
+					<th>Created At</th>
+					<th>Aksi</th>
+				</tr>
+				</tfoot>
+				<tbody>
+					{% for page in pages %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td><a href="{% url 'app:page_edit' page.id %}" target="_blank">{{ page.title|truncatechars:40 }}</a></td>
+						<td><a href="{% url 'page_detail' page.slug %}">{{ page.slug|lower }}</a></td>
+						<td>{{ page.author|default:"-" }}</td>
+						<td>{{ page.created_at|date:"d/m/Y H:i" }}</td>
+						<td>
+							{% if page.id %}
+							<a href="{% url 'app:page_edit' page.id %}">
+								<button class="btn primary small"><i class="ri-pencil-fill"></i></button>
+							</a>
+							<a href="{% url 'page_detail' page.slug %}">
+								<button class="btn primary small"><i class="ri-eye-fill"></i></button>
+							</a>
+							<form method="POST" action="{% url 'app:page_delete' page.id %}" style="display: inline;">
+								{% csrf_token %}
+								<button type="submit" class="btn danger small" onclick="return confirm('Apakah Anda yakin ingin menghapus page ini?')">
+									<i class="ri-delete-bin-fill"></i>
+								</button>
+							</form>
+							{% else %}
+							<span style="color: red;">ID tidak valid</span>
+							{% endif %}
+						</td>
+					</tr>
+					{% empty %}
+					<tr>
+						<td colspan="6" style="text-align: center;">Tidak ada data page</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+  
+{% endblock content1 %} 
+{% block script_costum %} 
+<script>
+
+</script>
+
+{% endblock script_costum %} 

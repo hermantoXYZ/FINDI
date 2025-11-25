@@ -1,0 +1,64 @@
+{% extends "dosen/base.html" %}
+{% block content1 %}
+<div class="dashboard-content">
+    <div class="form-card">
+        <div class="form-header">
+            <div class="form-header-icon">
+                <i class="ri-edit-line"></i>
+            </div>
+            <div class="form-header-content">
+                <h2>Edit Riwayat Pendidikan</h2>
+                <p>Silahkan update form dibawah ini untuk mengedit riwayat pendidikan.</p>
+            </div>
+        </div>
+        <form method="post" enctype="multipart/form-data" class="layanan-form">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.pendidikan_terakhir.id_for_label }}">Pendidikan Terakhir <span class="required">*</span></label>
+                    {{ form.pendidikan_terakhir }}
+                    {% if form.pendidikan_terakhir.errors %}
+                        <div class="error-message">
+                            {% for error in form.pendidikan_terakhir.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.tahun_masuk.id_for_label }}">Tahun Masuk <span class="required">*</span></label>
+                    {{ form.tahun_masuk }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.tahun_lulus.id_for_label }}">Tahun Lulus <span class="required">*</span></label>
+                    {{ form.tahun_lulus }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.nama_institusi.id_for_label }}">Nama Institusi <span class="required">*</span></label>
+                    {{ form.nama_institusi }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.program_studi.id_for_label }}">Program Studi <span class="required">*</span></label>
+                    {{ form.program_studi }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.gelar.id_for_label }}">Gelar <span class="required">*</span></label>
+                    {{ form.gelar }}
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="ri-save-line"></i>
+                    Simpan Perubahan
+                </button>
+                <a href="{% url 'app:education_background_list' %}" class="btn btn-secondary">
+                    <i class="ri-arrow-left-line"></i>
+                    Kembali ke Daftar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

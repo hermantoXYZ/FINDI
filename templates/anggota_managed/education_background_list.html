@@ -1,0 +1,84 @@
+{% extends "dosen/base.html" %}
+
+{% block content1 %}
+
+<div class="dashboard-content">
+	<div class="student-list-container">
+		<div class="list-header">
+			<div class="list-title">
+				<h2>{{ heading }}</h2>
+				<p>{{web_name}}</p>
+			</div>
+		</div>
+		<div class="student-table-actions">
+			<a href="{% url 'app:education_background_create' %}" class="btn primary small">
+				<i class="ri-add-line"></i> Tambah Riwayat Pendidikan
+			</a>
+		</div>
+		<div class="student-table">
+			<table id="layananTable" class="display" style="width:100%">
+				<thead>
+				<tr>
+					<th style="white-space: nowrap;">No</th>
+					<th style="white-space: nowrap;">Pendidikan Terakhir</th>
+					<th style="white-space: nowrap;">Tahun Lulus</th>
+					<th style="white-space: nowrap;">Tahun Masuk</th>
+					<th style="white-space: nowrap;">Nama Institusi</th>
+					<th style="white-space: nowrap;">Program Studi</th>
+					<th style="white-space: nowrap;">Gelar</th>
+					<th style="white-space: nowrap;">Aksi</th>
+				</tr>
+				</thead>
+				<tfoot>
+				<tr>
+					<th>No</th>
+					<th>Pendidikan Terakhir</th>
+					<th>Tahun Lulus</th>
+					<th>Tahun Masuk</th>
+					<th>Nama Institusi</th>
+					<th>Program Studi</th>
+					<th>Gelar</th>
+					<th>Aksi</th>
+				</tr>
+				</tfoot>
+				<tbody>
+					{% for education_background in education_background %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ education_background.pendidikan_terakhir|default:"-" }}</td>
+						<td>{{ education_background.tahun_lulus|default:"-" }}</td>
+						<td>{{ education_background.tahun_masuk|default:"-" }}</td>
+						<td>{{ education_background.nama_institusi|default:"-" }}</td>
+						<td>{{ education_background.program_studi|default:"-" }}</td>
+						<td>{{ education_background.gelar|default:"-" }}</td>
+						<td>
+							<a href="{% url 'app:education_background_edit' education_background.id %}">
+								<button class="btn primary small"><i class="ri-pencil-fill"></i></button>
+							</a>
+							<form method="POST" action="{% url 'app:education_background_delete' education_background.id %}" style="display: inline;">
+								{% csrf_token %}
+								<button type="submit" class="btn danger small" onclick="return confirm('Apakah Anda yakin ingin menghapus riwayat pendidikan ini?')">
+									<i class="ri-delete-bin-fill"></i>
+								</button>
+							</form>
+						</td>
+					</tr>
+					{% empty %}
+					<tr>
+						<td colspan="6" style="text-align: center;">Tidak ada data riwayat pendidikan</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+  
+{% endblock content1 %} 
+{% block script_costum %} 
+<script>
+
+</script>
+
+{% endblock script_costum %} 

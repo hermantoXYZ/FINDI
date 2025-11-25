@@ -1,0 +1,136 @@
+{% extends "admin_managed/base.html" %}
+
+{% block content1 %}
+
+<div class="dashboard-content">
+	<div class="student-list-container">
+		<div class="list-header">
+			<div class="list-title">
+				<h2>{{ heading }}</h2>
+				<p>{{web_name}}</p>
+			</div>
+		</div>
+		
+
+		<div class="student-table">
+			<table id="layananTable" class="display" style="width:100%">
+				<thead>
+				<tr>
+					<th>No</th>
+					<th>No Induk</th>
+					<th>Nama Lengkap</th>
+					<th>Email</th>
+					<th>Last Login</th>
+					<th>Aksi</th>
+				</tr>
+				</thead>
+				<tfoot>
+				<tr>
+					<th>No</th>
+					<th>Username</th>
+					<th>Nama Lengkap</th>
+					<th>Email</th>
+					<th>Last Login</th>
+					<th>Aksi</th>
+				</tr>
+				</tfoot>
+				{% if heading == 'Admin' %}
+					<tbody>
+					{% for datatb in user_data %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ datatb.username.username }}</td>
+						<td>{{ datatb.username.first_name }}</td>
+						<td>{{ datatb.username.email }}</td>
+						<td>{{ datatb.username.last_login }}</td>
+						<td><a href="/">
+							<button class="action-btn"><i class="ri-pencil-fill"></i></button>
+							</a>
+							<br>
+							<button class="action-btn primary" onclick="openModal('changePasswordModal', '{{ datatb.nim.id }}')">
+								<i class="ri-lock-fill"></i>
+							</button>						
+						</td>
+					</tr>
+					{% endfor %}
+					</tbody>
+				
+				{% else %}
+
+					<tbody>
+					{% for datatb in user_data %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ datatb.nip.username }}</td>
+						<td>{{ datatb.nip.first_name }}</td>
+						<td>{{ datatb.nip.email }}</td>
+						<td>{{ datatb.nip.last_login }}</td>
+						<td><a href="/">
+							<button class="action-btn"><i class="ri-pencil-fill"></i></button>
+							</a>
+							<br>
+							<button class="action-btn primary" onclick="openModal('changePasswordModal', '{{ datatb.nip.id }}')">
+								<i class="ri-lock-fill"></i>
+							</button>						
+						</td>
+					</tr>
+					{% endfor %}
+					</tbody>
+
+				{% endif %}
+
+			</table>
+		</div>
+	</div>
+</div>
+
+<div id="changePasswordModal" class="modal-edit"> 
+    <div class="modal-content-edit">
+        <span class="close" onclick="closeModal('changePasswordModal')">&times;</span>
+        <h2 style="text-align: left;">Ganti Password</h2>
+        <form id="changePasswordForm" method="post" onsubmit="return validatePassword()">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" id="userId">
+            <div class="form-group">
+                <label for="newPassword" style="text-align: left;">Password Baru</label>
+                <input type="password" class="form-control" id="newPassword" name="new_password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword" style="text-align: left;">Konfirmasi Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
+            </div>
+			<button type="submit" class="btn primary btn-block">
+				<i class="ri-save-line"></i>
+				Ganti Password
+			</button>
+        </form>
+    </div>
+</div>
+
+  
+{% endblock content1 %} 
+{% block script_costum %} 
+<script>
+	function openModal(modalId, userId) {
+		document.getElementById(modalId).style.display = 'block'; // Tampilkan modal
+		document.getElementById('userId').value = userId; // Masukkan userId ke input hidden
+		var modal = document.getElementById(modalId);
+        modal.style.display = "block";
+	}
+	
+    function closeModal(modalId) {
+        var modal = document.getElementById(modalId);
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        var modals = document.getElementsByClassName('modal-edit');
+        for (var i = 0; i < modals.length; i++) {
+            if (event.target == modals[i]) {
+                modals[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+{% endblock script_costum %} 

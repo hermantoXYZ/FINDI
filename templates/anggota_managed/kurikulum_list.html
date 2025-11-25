@@ -1,0 +1,93 @@
+{% extends "dosen/base.html" %}
+
+{% block content1 %}
+
+<div class="dashboard-content">
+	<div class="student-list-container">
+		<div class="list-header">
+			<div class="list-title">
+				<h2>{{ heading }}</h2>
+				<p>{{web_name}}</p>
+			</div>
+		</div>
+		<div class="student-table">
+			<table id="layananTable" class="display" style="width:100%">
+				<thead>
+				<tr>
+					<th style="white-space: nowrap;">No</th>
+					<th style="white-space: nowrap;">Nama Mata Kuliah</th>
+					<th style="white-space: nowrap;">Kode Mata Kuliah</th>
+					<th style="white-space: nowrap;">SKS Teori</th>
+					<th style="white-space: nowrap;">SKS Praktik</th>
+					<th style="white-space: nowrap;">Semester</th>
+					<th style="white-space: nowrap;">Jenis</th>
+					<th style="white-space: nowrap;">Deskripsi Singkat Mata Kuliah (PDF)</th>
+					<th style="white-space: nowrap;">Dosen Pengampu</th>
+					<th style="white-space: nowrap;">Aksi</th>
+				</tr>
+				</thead>
+				<tfoot>
+				<tr>
+					<th>No</th>
+					<th>Nama Mata Kuliah</th>
+					<th>Kode Mata Kuliah</th>
+					<th>SKS Teori</th>
+					<th>SKS Praktik</th>
+					<th>Semester</th>
+					<th>Jenis</th>
+					<th>Deskripsi Singkat Mata Kuliah (PDF)</th>
+					<th>Dosen Pengampu</th>
+					<th>Aksi</th>
+				</tr>
+				</tfoot>
+				<tbody>
+					{% for matakuliah in matakuliah %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td><a href="{% url 'app:kurikulum_edit' matakuliah.kode_mata_kuliah %}" target="_blank">{{ matakuliah.nama_mata_kuliah|truncatechars:40 }}</a></td>
+						<td>{{ matakuliah.kode_mata_kuliah|default:"-" }}</td>
+						<td>{{ matakuliah.sks_teori|default:"-" }}</td>
+						<td>{{ matakuliah.sks_praktik|default:"-" }}</td>
+						<td>{{ matakuliah.semester|default:"-" }}</td>
+						<td>{{ matakuliah.jenis|default:"-" }}</td>
+						<td><div class="response-text">{{ matakuliah.deskripsi_singkat|truncatechars:60|default:"-" }}</div></td>
+						<td>
+							{% with dosen_list=matakuliah.dosen_pengampu.all %}
+							{% if dosen_list %}
+								{% for dosen in dosen_list %}
+									{{ dosen }}<br>
+								{% endfor %}
+							{% else %}
+								-
+							{% endif %}
+						{% endwith %}
+						</td>
+						<td>
+							{% if matakuliah.id %}
+							<a href="{% url 'app:kurikulum_edit' matakuliah.kode_mata_kuliah %}">
+								<button class="btn primary small"><i class="ri-pencil-fill"></i></button>
+							</a>
+							{% else %}
+							<span style="color: red;">ID tidak valid</span>
+							{% endif %}
+						</td>
+					</tr>
+					{% empty %}
+					<tr>
+						<td colspan="6" style="text-align: center;">Tidak ada data matakuliah</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+  
+{% endblock content1 %} 
+{% block script_costum %} 
+<script>
+
+</script>
+
+{% endblock script_costum %} 

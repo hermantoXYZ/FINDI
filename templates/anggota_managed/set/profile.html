@@ -1,0 +1,112 @@
+{% extends "dosen/base.html" %}
+{% block content1 %}
+
+<div class="dashboard-content">
+	<!-- OPENING ELEMENT PROFILE SECTION -->
+	<div class="profile-container">
+		<!-- Profile Picture Section -->
+		<div class="profile-section">
+			<div class="profile-picture">
+				<img src="/media/{{ photo }}" alt="Profile Picture" id="preview-image">
+			</div>
+		</div>
+		<!-- General Information Section -->
+		<div class="settings-section">
+			{% if messages %}
+			{% for message in messages %}
+				<div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %} mb-4">
+					<i class="{% if message.tags == 'success' %}ri-checkbox-circle-line{% else %}ri-error-warning-line{% endif %} me-2"></i>
+					{{ message }}
+				</div>
+			{% endfor %}
+			{% endif %}
+			
+			<form method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="form-row">
+					<div class="form-group">
+						<label>Username</label>
+						<input type="text" class="form-control" value="{{ user.username }}" readonly>
+					</div>
+					<div class="form-group">
+						<label>Nama Lengkap</label>
+						<input type="text" class="form-control" value="{{ user.first_name }}" readonly>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group">
+						<label for="id_gender">Jenis Kelamin</label>
+						{{ form.gender }}
+					</div>
+					<div class="form-group">
+						<label for="id_telp">No. Telepon</label>
+						{{ form.telp }}
+					</div>
+					<div class="form-group">
+						<label for="id_google_scholar">Google Scholar</label>
+						{{ form.google_scholar }}
+					</div>
+					<div class="form-group">
+						<label for="id_orcid">ORCID</label>
+						{{ form.orcid }}
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group">
+						<label for="id_tempat_lahir">Tempat Lahir</label>
+						{{ form.tempat_lahir }}
+					</div>
+					<div class="form-group">
+						<label for="id_tgl_lahir">Tanggal Lahir</label>
+						{{ form.tgl_lahir }}
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group">
+						<label for="id_status_kepegawaian">Status Kepegawaian</label>
+						{{ form.status_kepegawaian }}
+					</div>
+					<div class="form-group">
+						<label for="id_jafung">Jabatan Fungsional</label>
+						{{ form.jafung }}
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group">
+						<label for="id_pangkat">Pangkat</label>
+						{{ form.pangkat }}
+					</div>
+					<div class="form-group">
+						<label for="id_golongan">Golongan</label>
+						{{ form.golongan }}
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group">
+						<label for="id_bidang_keahlian">Bidang Keahlian</label>
+						{{ form.bidang_keahlian }}
+					</div>
+					<div class="form-group">
+						<label for="id_nidn">NIDN</label>
+						{{ form.nidn }}
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group">
+						<label for="id_photo">Photo Profile</label>
+						{{ form.photo }}
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn primary">
+						<i class="ri-save-line"></i> Update Profile
+					</button>
+					<a href="{% url 'app:reset_password_dosen' %}" class="btn secondary">
+						<i class="ri-lock-password-line"></i> Reset Password
+					</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>  
+{% endblock content1 %} 

@@ -1,0 +1,39 @@
+{% extends "admin_managed/base.html" %}
+
+{% block content1 %}
+<div class="dashboard-content">
+	<!-- Stats Cards -->
+	<div class="hero-profile-elegant">
+		<div class="hero-photo-elegant">
+			<img src="/media/{{ photo }}" alt="Profile Picture">
+		</div>
+		<div class="hero-info-elegant">
+			<p class="hero-welcome-text">Selamat Datang..</p>
+			<h1 class="hero-name-display">{{ userdetail.username.first_name }}</h1>
+			<div class="hero-details-grid">
+				<div class="detail-item">
+					<span class="detail-label">Kontak</span>
+					<span class="detail-value">{{ userdetail.telp }}</span>
+				</div>
+				<div class="detail-item">
+					<span class="detail-label">Email</span>
+					<span class="detail-value">{{ userdetail.username.email }}</span>
+				</div>
+				<div class="detail-item">
+					<span class="detail-label">Jenis Kelamin</span>
+					<span class="detail-value">{{ userdetail.gender }}</span>
+				</div>
+			</div>
+			<div class="hero-action-area">
+				<a href="{% url 'app:profile_admin' %}">
+					{% if userdetail.photo is none %}
+						<button class="btn danger x-small">Lengkapi profile anda untuk melanjutkan aktivitas di sistem ini!</button>
+					{% else %}
+						<button class="btn warning x-small">Details</button>
+					{% endif %}
+				</a>
+			</div>
+		</div>
+	</div>	
+</div>
+{% endblock content1 %} 

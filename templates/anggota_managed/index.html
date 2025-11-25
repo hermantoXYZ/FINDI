@@ -1,0 +1,64 @@
+{% extends "dosen/base.html" %}
+
+{% block content1 %}
+<div class="dashboard-content">
+	<!-- Stats Cards -->
+
+	<div class="hero-profile-elegant">
+		<div class="hero-photo-elegant">
+			<img src="/media/{{ photo }}" alt="Profile Picture">
+		</div>
+		<div class="hero-info-elegant">
+			<p class="hero-welcome-text">Selamat Datang {{ userdetail.nip.last_name }}</p>
+			<h1 class="hero-name-display">{{ userdetail.nip.first_name }} </h1>
+			<div class="hero-details-grid">
+				<div class="detail-item">
+					<span class="detail-label">NIP</span>
+					<span class="detail-value">{{ userdetail.nip.username }}</span>
+				</div>
+				<div class="detail-item">
+					<span class="detail-label">NIDN</span>
+					<span class="detail-value">{{ userdetail.nidn }}</span>
+				</div>
+				<div class="detail-item">
+					<span class="detail-label">Program Studi</span>
+					<span class="detail-value">{{ userdetail.prodi }}</span>
+				</div>
+				<div class="detail-item">
+					<span class="detail-label">Jabatan Fungsional</span>
+					<span class="detail-value">{{ userdetail.jafung }}</span>
+				</div>
+				<div class="detail-item">
+					<span class="detail-label">Pangkat/Golongan</span>
+					<span class="detail-value">{{ userdetail.pangkat }} / {{ userdetail.golongan }}</span>
+				</div>
+				<div class="detail-item">
+					<span class="detail-label">Bidang Keahlian</span>
+					<span class="detail-value">{{ userdetail.bidang_keahlian }}</span>
+				</div>
+				<div class="detail-item">
+					<span class="detail-label">Google Scholar</span>
+					<span class="detail-value"><a href="{{ userdetail.google_scholar }}" target="_blank">{{ userdetail.google_scholar }}</a></span>
+				</div>
+				<div class="detail-item">
+					<span class="detail-label">ORCID</span>
+					<span class="detail-value"><a href="{{ userdetail.orcid }}" target="_blank">{{ userdetail.orcid|truncatechars:30 }}</a></span>
+				</div>
+			</div>
+			<div class="hero-action-area">
+				<a href="{% url 'app:profile_dosen' %}">
+					{% if userdetail.photo is none %}
+					<button class="btn danger small">
+							<i class="ri-alert-line"></i>Lengkapi profile anda untuk melanjutkan aktivitas di sistem ini!
+						</button>
+					{% else %}
+						<button class="btn primary medium">
+							<i class="ri-user-line"></i> Detail Profil
+						</button>
+					{% endif %}
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content1 %} 

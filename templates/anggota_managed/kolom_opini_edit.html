@@ -1,0 +1,50 @@
+{% extends "dosen/base.html" %}
+{% block content1 %}
+<div class="dashboard-content">
+    <div class="form-card">
+        <div class="form-header">
+            <div class="form-header-icon">
+                <i class="ri-edit-line"></i>
+            </div>
+            <div class="form-header-content">
+                <h2>Tambah Kolom Opini</h2>
+                <p>Silahkan isi form dibawah ini untuk menambah kolom opini.</p>
+            </div>
+        </div>
+        <form method="post" enctype="multipart/form-data" class="layanan-form">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.judul_opini.id_for_label }}">Judul Opini <span class="required">*</span></label>
+                    {{ form.judul_opini }}
+                    {% if form.judul_opini.errors %}
+                        <div class="error-message">
+                            {% for error in form.judul_opini.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.nama_media.id_for_label }}">Nama Media <span class="required">*</span></label>
+                    {{ form.nama_media }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.link_opini.id_for_label }}">Link Opini <span class="required">*</span></label>
+                {{ form.link_opini }}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="ri-save-line"></i>
+                    Simpan Perubahan
+                </button>
+                <a href="{% url 'app:community_service_list' %}" class="btn btn-secondary">
+                    <i class="ri-arrow-left-line"></i>
+                    Kembali ke Daftar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

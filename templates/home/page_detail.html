@@ -1,0 +1,31 @@
+{% extends 'home/base.html' %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block description %}{{ article.excerpt }}{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ article.excerpt }}">
+    <meta name="keywords" content="{{ article.keywords }}">
+    <meta name="author" content="{{ article.author }}">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+{% endblock %}
+{% block content %}
+
+
+<main class="content-area">
+            <div class="main-content">
+                <article class="article-full">
+                    <header class="article-header">
+                        <h1>{{ page.title }}</h1>
+                        <div class="article-meta">
+                            <span class="article-source">{{ page.author.username }}</span>
+                            <span class="article-date">{{ page.created_at|date:"d F Y" }}</span>
+                        </div>
+                    </header>
+                    <div class="article-body">
+                        <p>{{ page.content|safe }}</p>
+                    </div>
+                </article>
+            </div>
+        </main>
+{% endblock %}

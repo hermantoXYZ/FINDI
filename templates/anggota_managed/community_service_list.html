@@ -1,0 +1,78 @@
+{% extends "dosen/base.html" %}
+
+{% block content1 %}
+
+<div class="dashboard-content">
+	<div class="student-list-container">
+		<div class="list-header">
+			<div class="list-title">
+				<h2>{{ heading }}</h2>
+				<p>{{web_name}}</p>
+			</div>
+		</div>
+		<div class="student-table-actions">
+			<a href="{% url 'app:community_service_create' %}" class="btn primary small">
+				<i class="ri-add-line"></i> Tambah Kegiatan Sosial
+			</a>
+		</div>
+		<div class="student-table">
+			<table id="layananTable" class="display" style="width:100%">
+				<thead>
+				<tr>
+					<th style="white-space: nowrap;">No</th>
+					<th style="white-space: nowrap;">Judul Kegiatan</th>
+					<th style="white-space: nowrap;">Tahun Kegiatan</th>
+					<th style="white-space: nowrap;">Link Kegiatan</th>
+					<th style="white-space: nowrap;">Deskripsi Kegiatan</th>
+					<th style="white-space: nowrap;">Aksi</th>
+				</tr>
+				</thead>
+				<tfoot>
+				<tr>
+					<th>No</th>
+					<th>Judul Kegiatan</th>
+					<th>Tahun Kegiatan</th>
+					<th>Link Kegiatan</th>
+					<th>Deskripsi Kegiatan</th>
+					<th>Aksi</th>
+				</tr>
+				</tfoot>
+				<tbody>
+					{% for community_service in community_service %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ community_service.judul_kegiatan|default:"-" }}</td>
+						<td>{{ community_service.tahun_kegiatan|default:"-" }}</td>
+						<td>{{ community_service.link_kegiatan|default:"-" }}</td>
+						<td>{{ community_service.deskripsi_kegiatan|default:"-" }}</td>
+						<td>
+							<a href="{% url 'app:community_service_edit' community_service.id %}">
+								<button class="btn primary small"><i class="ri-pencil-fill"></i></button>
+							</a>
+							<form method="POST" action="{% url 'app:community_service_delete' community_service.id %}" style="display: inline;">
+								{% csrf_token %}
+								<button type="submit" class="btn danger small" onclick="return confirm('Apakah Anda yakin ingin menghapus kegiatan sosial ini?')">
+									<i class="ri-delete-bin-fill"></i>
+								</button>
+							</form>
+						</td>
+					</tr>
+					{% empty %}
+					<tr>
+						<td colspan="6" style="text-align: center;">Tidak ada data kegiatan sosial</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+  
+{% endblock content1 %} 
+{% block script_costum %} 
+<script>
+
+</script>
+
+{% endblock script_costum %} 

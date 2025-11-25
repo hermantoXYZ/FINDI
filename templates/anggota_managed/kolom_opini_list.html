@@ -1,0 +1,72 @@
+{% extends "dosen/base.html" %}
+
+{% block content1 %}
+
+<div class="dashboard-content">
+	<div class="student-list-container">
+		<div class="list-header">
+			<div class="list-title">
+				<h2>{{ heading }}</h2>
+				<p>{{web_name}}</p>
+			</div>
+		</div>
+		<div class="student-table-actions">
+			<a href="{% url 'app:kolom_opini_create' %}" class="btn primary small">
+				<i class="ri-add-line"></i> Tambah Kolom Opini
+			</a>
+		</div>
+		<div class="student-table">
+			<table id="layananTable" class="display" style="width:100%">
+				<thead>
+				<tr>
+					<th style="white-space: nowrap;">No</th>
+					<th style="white-space: nowrap;">Judul Opini</th>
+					<th style="white-space: nowrap;">Link Opini</th>
+					<th style="white-space: nowrap;">Aksi</th>
+				</tr>
+				</thead>
+				<tfoot>
+				<tr>
+					<th>No</th>
+					<th>Judul Opini</th>
+					<th>Link Opini</th>
+					<th>Aksi</th>
+				</tr>
+				</tfoot>
+				<tbody>
+					{% for kolom_opini in kolom_opini %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ kolom_opini.judul_opini|default:"-" }}</td>
+						<td>{{ kolom_opini.link_opini|default:"-" }}</td>
+						<td>
+							<a href="{% url 'app:kolom_opini_edit' kolom_opini.id %}">
+								<button class="btn primary small"><i class="ri-pencil-fill"></i></button>
+							</a>
+							<form method="POST" action="{% url 'app:kolom_opini_delete' kolom_opini.id %}" style="display: inline;">
+								{% csrf_token %}
+								<button type="submit" class="btn danger small" onclick="return confirm('Apakah Anda yakin ingin menghapus kolom opini ini?')">
+									<i class="ri-delete-bin-fill"></i>
+								</button>
+							</form>
+						</td>
+					</tr>
+					{% empty %}
+					<tr>
+						<td colspan="6" style="text-align: center;">Tidak ada data kegiatan sosial</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+  
+{% endblock content1 %} 
+{% block script_costum %} 
+<script>
+
+</script>
+
+{% endblock script_costum %} 

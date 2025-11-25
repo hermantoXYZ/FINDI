@@ -1,0 +1,98 @@
+{% extends "admin_managed/base.html" %}
+
+{% block content1 %}
+
+<div class="dashboard-content">
+	<div class="student-list-container">
+		<div class="list-header">
+			<div class="list-title">
+				<h2>{{ heading }}</h2>
+				<p>{{web_name}}</p>
+			</div>
+		</div>
+		<div class="list-filters">
+			<div class="table-actions">
+				<div class="action-group">
+					<a href="{% url 'app:article_create' %}">
+						<button class="btn primary small">
+							<i class="ri-add-line"></i>
+							<span>Add</span>
+						</button>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		
+
+		<div class="student-table">
+			<table id="layananTable" class="display" style="width:100%">
+				<thead>
+				<tr>
+					<th style="white-space: nowrap;">No</th>
+					<th>Updated At</th>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Published</th>
+					<th>Status</th>
+					<th>Aksi</th>
+				</tr>
+				</thead>
+				<tfoot>
+				<tr>
+					<th>No</th>
+					<th>Updated At</th>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Published</th>
+					<th>Status</th>
+					<th>Aksi</th>
+				</tr>
+				</tfoot>
+				<tbody>
+					{% for article in articles %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ article.updated_at|date:"d/m/Y H:i" }}</td>
+						<td><a href="{% url 'app:article_edit' article.id %}" target="_blank">{{ article.title|truncatechars:40 }}</a></td>
+						<td>{{ article.author|default:"-" }}</td>
+						<td>{{ article.created_at|date:"d/m/Y H:i" }} | {{ article.created_at|timeuntil }}</td>
+						<td> <span class="badge {% if article.status == 'published' and article.created_at > now %} grade-badge b {% elif article.status == 'published' and article.created_at <= now %} grade-badge a {% else %} grade-badge c {% endif %} "> {% if article.status == 'published' and article.created_at > now %} Terjadwal {% elif article.status == 'published' %} Published {% else %} {{ article.status|capfirst }} {% endif %} </span> </td>
+						<td>
+							{% if article.id %}
+							<a href="{% url 'app:article_edit' article.id %}">
+								<button class="btn primary small"><i class="ri-pencil-fill"></i></button>
+							</a>
+							<a href="{% url 'article_detail' category_slug=article.category.slug unique_id=article.unique_id slug=article.slug %}">
+								<button class="btn primary small"><i class="ri-eye-fill"></i></button>
+							</a>
+							<form method="POST" action="{% url 'app:article_delete' article.id %}" style="display: inline;">
+								{% csrf_token %}
+								<button type="submit" class="btn danger small" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
+									<i class="ri-delete-bin-fill"></i>
+								</button>
+							</form>
+							{% else %}
+							<span style="color: red;">ID tidak valid</span>
+							{% endif %}
+						</td>
+					</tr>
+					{% empty %}
+					<tr>
+						<td colspan="6" style="text-align: center;">Tidak ada data article</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+  
+{% endblock content1 %} 
+{% block script_costum %} 
+<script>
+
+</script>
+
+{% endblock script_costum %} 

@@ -1,0 +1,303 @@
+
+{% extends 'home/base.html' %}
+{% block title %}{{ webname }} - Tegas, Cepat dan Berimbang{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ web_name }}">
+    <meta name="keywords" content="Tegas, Cepat, Berimbang, Berita Makassar, Berita Sulawesi Selatan, Terkini, Berita Terbaru">
+    <meta name="author" content="LosariPost.com">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+    <meta name="news_keywords" content="LosariPost, Berita Terkini, Berita Terpopuler, Info Berita Terupdate, PSM, info Bola" />
+{% endblock %}
+{% block content %}
+    <main class="hero-section">
+        <div class="market-nav">
+            <a href="#" class="market-link active">US</a>
+            <a href="#" class="market-link">Europe</a>
+            <a href="#" class="market-link">Asia</a>
+            <a href="#" class="market-link">Currencies</a>
+            <a href="#" class="market-link active">Crypto</a>
+            <a href="#" class="market-link">Futures</a>
+        </div>
+    
+        <div class="ticker-container">
+            <div class="ticker-item down">
+                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="ticker-info">
+                    <span class="ticker-name">Bitcoin (BTC / IDR)</span>
+                    <span class="ticker-price">1,544,931,905.60</span>
+                </div>
+                <div class="ticker-change">
+                    <span class="percent">-0.67%</span>
+                    <span class="value">-10,449,363.90</span>
+                </div>
+            </div>
+            <div class="ticker-item down">
+                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="ticker-info">
+                    <span class="ticker-name">Ether (ETH / IDR)</span>
+                    <span class="ticker-price">51,988,153.03</span>
+                </div>
+                <div class="ticker-change">
+                    <span class="percent">-0.0092%</span>
+                    <span class="value">-269,204.68</span>
+                </div>
+            </div>
+            <div class="ticker-item up">
+                <div class="ticker-arrow"><i class="fas fa-arrow-up"></i></div>
+                <div class="ticker-info">
+                    <span class="ticker-name">Solana (SOL / IDR)</span>
+                    <span class="ticker-price">2,361,060.3024</span>
+                </div>
+                <div class="ticker-change">
+                    <span classs="percent">+0.27%</span>
+                    <span class="value">+6,296.2828</span>
+                </div>
+            </div>
+            <div class="ticker-item down">
+                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="ticker-info">
+                    <span class="ticker-name">XRP (XRP / IDR)</span>
+                    <span class="ticker-price">36,956.7548</span>
+                </div>
+                <div class="ticker-change">
+                    <span class="percent">-0.36%</span>
+                    <span class="value">-132.8669</span>
+                </div>
+            </div>
+            <div class="ticker-item down">
+                 <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="ticker-info">
+                    <span class="ticker-name">Dogecoin (DOGE / IDR)</span>
+                    <span class="ticker-price">2,694.95</span>
+                </div>
+                 <div class="ticker-change">
+                    <span class="percent">-0.45%</span>
+                    <span class="value">-12.21</span>
+                </div>
+            </div>
+        </div>
+<form method="get" action="{% url 'article_list' %}" class="hero-search-container">
+    <i class="fas fa-search search-icon-input"></i>
+    <input type="text" name="search" placeholder="Search for stocks, ETFs and more" value="{{ search_query|default:'' }}">
+</form>
+        <div class="wave-container"></div>
+
+        <div class="content-area">
+            <div class="main-content">
+                <section class="top-movers">
+                    <h2>Top movers in your lists</h2>
+                    <div class="mover-item">
+                        <span class="mover-tag">BBRI</span>
+                        <span class="mover-name">Bank Rakyat Indonesia (Pe...</span>
+                        <span class="mover-price">Rp3,990.00</span>
+                        <span class="mover-change-value">+Rp20.00</span>
+                        <span class="mover-change-percent up"><i class="fas fa-arrow-up"></i> 0.50%</span>
+                        <span class="mover-action"><i class="fas fa-check-circle"></i></span>
+                    </div>
+                </section>
+
+                <section class="financial-news">
+                    <h2>Today's financial news</h2>
+                    <div class="news-filters">
+                        <button class="filter-btn active">Top stories</button>
+                        <button class="filter-btn">Local market</button>
+                        <button class="filter-btn">World markets</button>
+                    </div>
+                    <div class="news-list">
+        {% if article_list %}
+        {% for artikel in article_list %}
+                        <article class="news-item">
+                            <div class="news-content">
+                                <div class="news-source">{{ artikel.category }} • {{ artikel.created_at|date:'d F Y' }}</div>
+                                <h3><a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">{{ artikel.title }}</a></h3>
+                                <div class="news-ticker">{{ artikel.topic.name }} <span class="up"><i class="fas fa-arrow-up"></i> 0.45%</span></div>
+                            </div>
+                            {% if artikel.featured_image %}
+                            <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}" class="news-image">
+                            {% endif %}
+                        </article>
+        {% endfor %}
+        {% else %}
+        <p>Tidak ada artikel</p>
+        {% endif %}
+                    </div>
+                </section>
+
+                <div class="recently-searched">
+                <h2>Sektor Healthcare</h2>
+                <div class="discover-grid-container">
+                    <button class="scroll-button left"><span class="material-icons">chevron_left</span></button>
+                    <div class="discover-grid">
+                        {% for item in market_data %}
+                        <div class="stock-card">
+                            <div class="stock-card-ticker index">{{ item.symbol }}</div>
+                            <div class="stock-card-name">{{ item.nama_perusahaan|truncatechars:20 }}</div>
+                    <div class="stock-card-price {% if item.percent_change >= 0 %} positive {% else %} negative {% endif %}">
+                        {{ item.harga }} ({{ item.percent_change|floatformat:2 }}%)
+                    </div>       
+                        </div>
+                        {% endfor %}
+                
+                    </div>
+                    <button class="scroll-button right"><span class="material-icons">chevron_right</span></button>
+                </div>
+            </div>
+
+
+
+
+
+                <div class="recently-searched">
+                <h2>Sektor Healthcare</h2>
+                <div class="discover-grid-container">
+                    <button class="scroll-button left"><span class="material-icons">chevron_left</span></button>
+                   
+                    <div class="ticker-container">
+            <div class="ticker-item down">
+                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="ticker-info">
+                    <span class="ticker-name">Bitcoin (BTC / IDR)</span>
+                    <span class="ticker-price">1,544,931,905.60</span>
+                </div>
+                <div class="ticker-change">
+                    <span class="percent">-0.67%</span>
+                    <span class="value">-10,449,363.90</span>
+                </div>
+            </div>
+            <div class="ticker-item down">
+                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="ticker-info">
+                    <span class="ticker-name">Ether (ETH / IDR)</span>
+                    <span class="ticker-price">51,988,153.03</span>
+                </div>
+                <div class="ticker-change">
+                    <span class="percent">-0.0092%</span>
+                    <span class="value">-269,204.68</span>
+                </div>
+            </div>
+            <div class="ticker-item up">
+                <div class="ticker-arrow"><i class="fas fa-arrow-up"></i></div>
+                <div class="ticker-info">
+                    <span class="ticker-name">Solana (SOL / IDR)</span>
+                    <span class="ticker-price">2,361,060.3024</span>
+                </div>
+                <div class="ticker-change">
+                    <span classs="percent">+0.27%</span>
+                    <span class="value">+6,296.2828</span>
+                </div>
+            </div>
+            <div class="ticker-item down">
+                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="ticker-info">
+                    <span class="ticker-name">XRP (XRP / IDR)</span>
+                    <span class="ticker-price">36,956.7548</span>
+                </div>
+                <div class="ticker-change">
+                    <span class="percent">-0.36%</span>
+                    <span class="value">-132.8669</span>
+                </div>
+            </div>
+            <div class="ticker-item down">
+                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="ticker-info">
+                    <span class="ticker-name">Dogecoin (DOGE / IDR)</span>
+                    <span class="ticker-price">2,694.95</span>
+                </div>
+                <div class="ticker-change">
+                    <span class="percent">-0.45%</span>
+                    <span class="value">-12.21</span>
+                </div>
+            </div>
+        </div>
+        <button class="scroll-button right"><span class="material-icons">chevron_right</span></button>
+                </div>
+            </div>
+
+
+            
+            </div>
+
+
+
+
+            
+            
+
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-pie card-icon-blue"></i>
+                        <div class="card-title">
+                            <h4>Your portfolios</h4>
+                            <p>Only you can see this</p>
+                        </div>
+                    </div>
+                    <div class="portfolio-value">Rp0</div>
+                    <div class="portfolio-item">
+                        <span>FronX</span>
+                        <span>Rp0</span>
+                        <span>0.00%</span>
+                    </div>
+                    <button class="btn-new-portfolio"><i class="fas fa-plus"></i> New portfolio</button>
+                </div>
+
+                <div class="sidebar-card">
+                    <h4>Market trends</h4>
+                    <div class="trend-filters">
+                        <button class="filter-chip"><i class="fas fa-chart-line"></i> Market indexes</button>
+                        <button class="filter-chip"><i class="fas fa-poll"></i> Most active</button>
+                        <button class="filter-chip"><i class="fas fa-arrow-up"></i> Gainers</button>
+                        <button class="filter-chip"><i class="fas fa-arrow-down"></i> Losers</button>
+                        <button class="filter-chip"><i class="fas fa-leaf"></i> Climate leaders</button>
+                        <button class="filter-chip"><i class="fas fa-coins"></i> Crypto</button>
+                        <button class="filter-chip"><i class="fas fa-dollar-sign"></i> Currencies</button>
+                    </div>
+                </div>
+
+                  <div class="sidebar-card">
+                    <h4>Most followed on Google</h4>
+                    <div class="followed-stock-list">
+                        {% for item in market_global %}
+                        <div class="followed-stock-item">
+                            <div class="followed-stock-info">
+                                <span class="stock-ticker-tag {{ item.symbol|lower }}">
+                                    {{ item.symbol }}
+                                </span>
+                                <div class="stock-details">
+                                    <h5>{{ item.company_name }}</h5>
+                                    <p>{{ item.price|floatformat:2 }} USD</p>
+                                </div>
+                            </div>
+                        <div class="followed-stock-action">
+
+                            <!-- Dynamic Price Change (Up/Down) -->
+                            {% if item.percent_change >= 0 %}
+                            <span class="stock-change-tag up">
+                                <i class="fas fa-arrow-up"></i> 
+                                {{ item.percent_change|floatformat:2 }}%
+                            </span>
+                            {% else %}
+                            <span class="stock-change-tag down">
+                                <i class="fas fa-arrow-down"></i> 
+                                {{ item.percent_change|floatformat:2 }}%
+                            </span>
+                            {% endif %}
+
+                            <button class="add-stock-btn">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        </div>
+                        {% endfor %}
+                    
+
+                    </div>
+                </div>
+
+            
+            </aside>
+        </div>
+    </main>
+{% endblock %}

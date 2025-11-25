@@ -1,0 +1,317 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | {{webname}}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}?v={{ STATIC_VERSION }}"> 
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar --> 
+        <div class="sidebar">
+            <div class="logo">
+                <!-- <img src="/static/img/logo.png" style="width: 100px;"> -->
+                <div class="logo-text">
+                    <h2>{{webname}}</h2>
+                    <span>{{web_name}}</span>
+                </div>
+            </div>
+          
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li class="{% if title == 'Dashboard' %}active{% endif %}">
+                        <a href="{% url 'app:dashboard' %}"><i class="ri-dashboard-line"></i> Dashboard</a>
+                    </li>
+                    <li class="{% if title == 'Kurikulum' %}active{% endif %}">
+                        <a href="{% url 'app:kurikulum_list' %}"><i class="ri-list-unordered"></i>Kurikulum</a>
+                    </li>
+                    <li class="{% if title == 'Riwayat Pendidikan' %}active{% endif %}">
+                        <a href="{% url 'app:education_background_list' %}"><i class="ri-book-open-line"></i>Riwayat Pendidikan</a>
+                    </li>
+                    <li class="{% if title == 'Publikasi Dosen' %}active{% endif %}">
+                        <a href="{% url 'app:publication_dosen_list' %}"><i class="ri-book-open-line"></i>Publikasi Dosen</a>
+                    </li>
+                    <li class="{% if title == 'Community Service' %}active{% endif %}">
+                        <a href="{% url 'app:community_service_list' %}"><i class="ri-book-open-line"></i>Community Service</a>
+                    </li>
+                    <li class="{% if title == 'Kolom Opini' %}active{% endif %}">
+                        <a href="{% url 'app:kolom_opini_list' %}"><i class="ri-book-open-line"></i>Kolom Opini</a>
+                    </li>
+                    <li class="{% if title == 'Profile' %}active{% endif %}">
+                        <a href="{% url 'app:profile_dosen' %}"><i class="ri-user-3-line"></i> Profile</a>
+                    </li>
+                    <li class="{% if title == 'Reset Password' %}active{% endif %}">
+                        <a href="{% url 'app:reset_password_dosen' %}"><i class="ri-lock-password-line"></i> Reset Password</a>
+                    </li>
+                    
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn logout" onclick="openModal('logout')">
+                    <i class="ri-logout-box-line"></i>
+                    Logout
+                </button>
+                <div class="sidebar-footer-p">
+                    <p>© 2024 Praksis Digital Nusantara.</p>
+                    <p>Version: 1.0.0-alpha.1</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button id="toggle-sidebar"><i class="ri-menu-line"></i></button>
+                    <h2>{{heading}}</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-menu">
+                        <i class="ri-contrast-2-fill"></i>
+                        <!-- <div class="notification-icon">
+                            <i class="ri-notification-3-line"></i>
+                            <span class="notif-count" style="display: none;">0</span>
+                        </div> -->
+                        <img src="/media/{{ photo }}" alt="User Avatar" class="avatar">
+                    </div>
+                </div>
+            </header>
+
+            <div class="alert2-container">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert2 alert2-{{ message.tags }}">
+                            <i class="{% if message.tags == 'success' %}ri-checkbox-circle-line
+                                    {% elif message.tags == 'warning' %}ri-alert-line
+                                    {% elif message.tags == 'info' %}ri-information-line
+                                    {% else %}ri-error-warning-line
+                                    {% endif %}">
+                                </i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+
+            {% block content1 %}
+            {% endblock content1 %}
+
+
+            
+            <!-- START FOOTER DASHBAORD -->
+            <footer class="dashboard-footer">
+                <div class="footer-content">
+                    <div class="footer-left">
+                        <p>&copy; 2025 Praksis Digital Nusantara. All rights reserved.
+                        </p>
+                    </div>
+                    <div class="footer-center">
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Privacy Police</a>
+                        <a href="#">Manual Guide</a>
+                    </div>
+                    <div class="footer-right">
+                        <div class="social-links">
+                            <a href="#"><i class="ri-facebook-fill"></i></a>
+                            <a href="#"><i class="ri-twitter-fill"></i></a>
+                            <a href="#"><i class="ri-instagram-line"></i></a>
+                            <a href="#"><i class="ri-github-fill"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </footer>
+            <!-- FOOTER DASHBOARD -->
+
+        </div>
+    </div>
+
+
+
+<!-- MODAL NOTIFIKASI -->
+<div class="notification-modal" id="notificationModal">
+    <div class="notification-header">
+        <h2>Layanan Menunggu</h2>
+    </div>
+    <div class="notification-list">
+        <!-- Notifikasi akan dimuat di sini oleh JavaScript -->
+    </div>
+    <div class="notification-footer">
+        <a href="{% url 'app:dashboard' %}" class="view-all">View all</a>
+    </div>
+</div>
+
+
+
+<!-- MODAL LOGOUT -->
+<div id="logout" class="modal-edit">
+	<div class="modal-content-edit">
+		<span class="close" onclick="closeModal('logout')">&times;</span>
+		<div class="modal-icon"><i class="ri-logout-box-r-line"></i></div>
+		<h2>Konfirmasi Logout</h2>
+        <p>Yakin ingin keluar dari aplikasi?</p>
+        <div class="modal-actions">
+            <button class="btn" onclick="closeModal('logout')">
+                Batal
+            </button>
+            <form action="{% url 'app:logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn danger">
+                    Keluar
+                </button>
+            </form>
+        </div>
+	</div>
+</div>
+
+<script src="{% static 'js/main.js' %}?v={{ STATIC_VERSION }}"></script>
+
+
+
+<script>
+    function updateNotificationCount() {
+        fetch("/")
+            .then(response => response.json())
+            .then(data => {
+                const count = data.count;
+                const notifElement = document.querySelector('.notif-count');
+
+                if (count > 0) {
+                    notifElement.textContent = count > 9 ? '9+' : count;
+                    notifElement.style.display = 'inline-block';
+                } else {
+                    notifElement.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Gagal memuat notifikasi:', error);
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateNotificationCount();
+        setInterval(updateNotificationCount, 10000); // tiap 10 detik
+    });
+
+    function updateNotificationModal() {
+        fetch("/")
+            .then(response => response.json())
+            .then(data => {
+                const notifList = document.querySelector('.notification-list');
+                notifList.innerHTML = ''; // Kosongkan daftar notifikasi
+    
+                data.data.forEach(item => {
+                    const notifItem = `
+                        <div class="notification-item">
+                            <img src="/${item.avatar}" alt="User Avatar" class="notification-avatar">
+                            <div class="notification-content">
+                                <p><strong>${item.mhs}</strong> ${item.jenis_layanan}</p>
+                                <span class="notification-time">${item.date_in}</span>
+                            </div>
+                        </div>
+                    `;
+                    notifList.innerHTML += notifItem;
+                });
+    
+                const notifCount = document.querySelector('.notif-count');
+                if (data.count > 0) {
+                    notifCount.textContent = data.count > 9 ? '9+' : data.count;
+                    notifCount.style.display = 'inline-block';
+                } else {
+                    notifCount.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Gagal memuat notifikasi:', error);
+            });
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        updateNotificationModal();
+        setInterval(updateNotificationModal, 10000); // Perbarui setiap 10 detik
+    });
+</script>
+<!-- DataTables CSS & JS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script>
+    $(document).ready(function() {
+      $('#layananTable').DataTable({
+        dom: 'Bfrtip',
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+        responsive: true
+      });
+    });
+  </script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elements = document.querySelectorAll('.js-choices-multiple');
+        elements.forEach(function(el) {
+            var placeholder = el.getAttribute('data-placeholder') || 'Pilih Dosen';
+            new Choices(el, {
+                removeItemButton: true,
+                searchResultLimit: 10,
+                placeholder: true,
+                placeholderValue: placeholder,
+                noResultsText: 'Tidak ditemukan',
+                noChoicesText: 'Tidak ada pilihan',
+                itemSelectText: 'Pilih',
+                shouldSort: false
+            });
+        });
+    });
+</script>
+
+
+
+
+{% block script_costum %} 
+{% endblock script_costum %} 
+
+{% block script_modal %} 
+<script>
+    function openModal(modalId) {
+        var modal = document.getElementById(modalId);
+        modal.style.display = "block";
+    }
+
+    function closeModal(modalId) {
+        var modal = document.getElementById(modalId);
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        var modals = document.getElementsByClassName('modal-edit');
+        for (var i = 0; i < modals.length; i++) {
+            if (event.target == modals[i]) {
+                modals[i].style.display = "none";
+            }
+        }
+    }
+</script>
+{% endblock script_modal %} 
+
+</body>
+</html>
