@@ -78,36 +78,80 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+def rename_logo_saham(instance, filename):
+    ext = filename.split('.')[-1]
+    symbol = instance.symbol
+    timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+    new_filename = f"{symbol}_{timestamp}.{ext}"
+    return os.path.join('saham/logos/', new_filename)
+
 class Saham(models.Model):
-    symbol = models.CharField(max_length=10, unique=True)  
-    nama_perusahaan = models.CharField(max_length=100)
-    tanggal_listing = models.DateField(null=True, blank=True)
-    current_share = models.PositiveBigIntegerField()
-    papan_pencatatan = models.CharField(max_length=50)  
-    sektor = models.CharField(max_length=100)
-    last_price = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
-    price_change = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
-    percent_change = models.FloatField(null=True, blank=True)
-    previous_close = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
+    symbol = models.CharField(max_length=20)
+    short_name = models.CharField(max_length=255, null=True, blank=True)
+    long_name = models.CharField(max_length=255, null=True, blank=True)
+    currency = models.CharField(max_length=10, null=True, blank=True)
 
-    market_cap = models.BigIntegerField(null=True, blank=True)
+    # Profil
+    sektor = models.CharField(max_length=100, null=True, blank=True)
+    papan_pencatatan = models.CharField(max_length=100, null=True, blank=True)
+    logo = models.ImageField(upload_to=rename_logo_saham, null=True, blank=True)
+    firt_trade_date = models.BigIntegerField(null=True, blank=True)
+
+    # Harga pasar
+    price = models.FloatField(null=True, blank=True)
+    change = models.FloatField(null=True, blank=True)
+    change_pct = models.FloatField(null=True, blank=True)
     volume = models.BigIntegerField(null=True, blank=True)
-    pe_ratio = models.FloatField(null=True, blank=True)
-    eps = models.FloatField(null=True, blank=True)
-    dividend_yield = models.FloatField(null=True, blank=True)
-    beta = models.FloatField(null=True, blank=True)
-    last_updated = models.DateTimeField(null=True, blank=True)
-    last_fundamental_update = models.DateTimeField(null=True, blank=True)
+    open_price = models.FloatField(null=True, blank=True)
+    time = models.DateTimeField(null=True, blank=True)
 
+    # Valuasi
+    market_cap = models.BigIntegerField(null=True, blank=True)
+    pe = models.FloatField(null=True, blank=True)
+    forward_pe = models.FloatField(null=True, blank=True)
+    pbv = models.FloatField(null=True, blank=True)
 
-    class Meta:
-        verbose_name = "Saham"
-        verbose_name_plural = "Daftar Saham"
-        ordering = ['symbol']   
+    # Dividend
+    div_yield = models.FloatField(null=True, blank=True)
+    div_rate = models.FloatField(null=True, blank=True)
+
+    # EPS data
+    eps_ttm = models.FloatField(null=True, blank=True)
+    eps_forward = models.FloatField(null=True, blank=True)
+    eps_year = models.FloatField(null=True, blank=True)
+    price_eps_year = models.FloatField(null=True, blank=True)
+
+    # Saham beredar
+    shares_outstanding = models.BigIntegerField(null=True, blank=True)
+
+    # Harga harian
+    prev_close = models.FloatField(null=True, blank=True)
+    day_high = models.FloatField(null=True, blank=True)
+    day_low = models.FloatField(null=True, blank=True)
+
+    # Volume rata-rata
+    avg_vol_3m = models.BigIntegerField(null=True, blank=True)
+    avg_vol_10d = models.BigIntegerField(null=True, blank=True)
+
+    # 52-week range
+    week52_high = models.FloatField(null=True, blank=True)
+    week52_low = models.FloatField(null=True, blank=True)
+    week52_high_change = models.FloatField(null=True, blank=True)
+    week52_high_change_pct = models.FloatField(null=True, blank=True)
+    week52_low_change = models.FloatField(null=True, blank=True)
+    week52_low_change_pct = models.FloatField(null=True, blank=True)
+
+    # Additional
+    book_value = models.FloatField(null=True, blank=True)
+    confidence = models.CharField(max_length=50, null=True, blank=True)
+
+    # Auto update timestamp
+    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.symbol} - {self.nama_perusahaan}"
-    
+        return f"{self.symbol} - {self.short_name}"
+
+
 class Topic(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50, unique=True)

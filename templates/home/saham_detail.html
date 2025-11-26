@@ -88,28 +88,28 @@
                 <div class="mover-item">
                     <span class="mover-tag">{{ saham.symbol }}</span>
                     <span class="mover-name">{{ saham.nama_perusahaan }}</span>
-                    <span class="mover-price">{{ saham.last_price|floatformat:2 }}</span>
+                    <span class="mover-price">{{ saham.price|floatformat:2 }}</span>
                     <span class="mover-change-value">
-                        {% if saham.price_change > 0 %}
-                            <span style="color:green;">{{ saham.price_change|floatformat:2 }}</span>
-                        {% elif saham.price_change < 0 %}
-                            <span style="color:red;">{{ saham.price_change|floatformat:2 }}</span>
+                        {% if saham.change > 0 %}
+                            <span style="color:green;">{{ saham.change|floatformat:2 }}</span>
+                        {% elif saham.change < 0 %}
+                            <span style="color:red;">{{ saham.change|floatformat:2 }}</span>
                         {% else %}
-                            Rp{{ saham.price_change|floatformat:2 }}
+                            Rp{{ saham.change|floatformat:2 }}
                         {% endif %}
                     </span>
 
                     <span class="mover-change-percent">
-                        {% if saham.percent_change > 0 %}
+                        {% if saham.change_pct > 0 %}
                             <span style="color:green;">
-                                <i class="fas fa-arrow-up"></i> +{{ saham.percent_change|floatformat:2 }}%
+                                <i class="fas fa-arrow-up"></i> +{{ saham.change_pct|floatformat:2 }}%
                             </span>
-                        {% elif saham.percent_change < 0 %}
+                        {% elif saham.change_pct < 0 %}
                             <span style="color:red;">
-                                <i class="fas fa-arrow-down"></i> {{ saham.percent_change|floatformat:2 }}%
+                                <i class="fas fa-arrow-down"></i> {{ saham.change_pct|floatformat:2 }}%
                             </span>
                         {% else %}
-                            {{ saham.percent_change|floatformat:2 }}%
+                            {{ saham.change_pct|floatformat:2 }}%
                         {% endif %}
                     </span>
                     <span class="mover-action"><i class="fas fa-check-circle"></i></span>
@@ -152,16 +152,16 @@
                 <p class="value format-idr">{{ saham.market_cap }}</p>
             </div>
             <div class="metric">
-                <p class="label">P/E Ratio (TTM)</p>
-                <p class="value">{{ saham.pe_ratio }}</p>
+                <p class="label">PBV</p>
+                <p class="value">{{ saham.pbv }}</p>
             </div>
             <div class="metric">
                 <p class="label">EPS (TTM)</p>
-                <p class="value">{{ saham.eps }}</p>
+                <p class="value">{{ saham.eps_ttm }}</p>
             </div>
             <div class="metric">
                 <p class="label">Dividend Yield</p>
-                <p class="value">{{ saham.dividend_yield }}</p>
+                <p class="value">{{ saham.div_yield }}</p>
             </div>
         </div>
 
@@ -203,7 +203,7 @@
                         <span>FOUNDED</span>
                     </div>
                     <div class="info-value">
-                        <span>16 Dec 1895</span>
+                        <span>{% if saham.firt_trade_date %} {% else %} Data Tidak Tersedia {% endif %}</span>
                     </div>
                 </div>
                 </div>

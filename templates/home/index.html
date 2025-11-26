@@ -125,25 +125,39 @@
                     </div>
                 </section>
 
-                <div class="recently-searched">
-                <h2>Sektor Healthcare</h2>
-                <div class="discover-grid-container">
-                    <button class="scroll-button left"><span class="material-icons">chevron_left</span></button>
-                    <div class="discover-grid">
-                        {% for item in market_data %}
-                        <div class="stock-card">
-                            <div class="stock-card-ticker index">{{ item.symbol }}</div>
-                            <div class="stock-card-name">{{ item.nama_perusahaan|truncatechars:20 }}</div>
-                    <div class="stock-card-price {% if item.percent_change >= 0 %} positive {% else %} negative {% endif %}">
-                        {{ item.harga }} ({{ item.percent_change|floatformat:2 }}%)
-                    </div>       
-                        </div>
-                        {% endfor %}
+<div class="recently-searched">
+    <h2>Sektor Healthcare</h2>
+    <div class="discover-grid-container">
+        <button class="scroll-button left">
+            <span class="material-icons">chevron_left</span>
+        </button>
+
+        <div class="discover-grid">
+
+            {% for item in saham_healthcare %}
+            <a href="{% url 'saham_detail' item.symbol %}" class="stock-card">
                 
-                    </div>
-                    <button class="scroll-button right"><span class="material-icons">chevron_right</span></button>
+                <div class="stock-card-ticker index">{{ item.symbol }}</div>
+                
+                <div class="stock-card-name">
+                    {{ item.long_name|truncatechars:20 }}
                 </div>
-            </div>
+                
+                <div class="stock-card-price {% if item.change_pct >= 0 %} positive {% else %} negative {% endif %}">
+                    {{ item.price }} ({{ item.change_pct|floatformat:2 }}%)
+                </div>       
+
+            </a>
+            {% endfor %}
+
+        </div>
+
+        <button class="scroll-button right">
+            <span class="material-icons">chevron_right</span>
+        </button>
+    </div>
+</div>
+
 
 
 

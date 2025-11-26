@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'app',
     'django_summernote',
     'import_export',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -194,3 +195,7 @@ SUMMERNOTE_CONFIG = {
 }
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024  # 20 MB
+
+CRONJOBS = [
+    ('*/1 * * * *', 'app.cron.update_all_saham'), 
+]

@@ -8,8 +8,7 @@ from django.db.models import Count, Q
 from django.utils.text import slugify
 from app.forms_anggota import formUserRegisterAnggota
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import yfinance as yf
-from app.utils import get_realtime_prices
+
 
 # tanggal_now = timezone.now()
 
@@ -24,15 +23,11 @@ def index(request):
     news = Article.objects.filter(category__slug='news', status='published', created_at__lte=timezone.now()).order_by('-created_at')
     popular_articles = Article.objects.filter(status='published', created_at__lte=timezone.now()).order_by('-views_count')[:7]
     category_list_variabel = Category.objects.all()
+    saham_healthcare = Saham.objects.filter(sektor="healthcare")
+
     paginator = Paginator(all_articles, 6)
     page = request.GET.get('page')
     
-    realtime_saham = get_realtime_prices()
-    sektor_healthcare = [
-    item for item in realtime_saham 
-    if item.get('sektor', '').lower() == "healthcare"
-]
-
     try:
         articles = paginator.page(page)
     except PageNotAnInteger:
@@ -50,7 +45,7 @@ def index(request):
         'news': news,
         'popular_articles': popular_articles,
         'category_list': category_list_variabel,
-        'market_data': sektor_healthcare,
+        'saham_healthcare': saham_healthcare,
     }
     return render(request,'home/index.html', context) 
 
@@ -209,8 +204,6 @@ def about(request):
 
 def saham_detail(request, symbol):
     saham = get_object_or_404(Saham, symbol=symbol.upper())
-    
-
     context = {
         'saham': saham,
     }

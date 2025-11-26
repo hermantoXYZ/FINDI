@@ -4,38 +4,25 @@ from .models import UserAdmin, UserAnggota, Article, Category, Page, Topic, Saha
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
 from .admin_resources import UserAnggotaResource
-
+from import_export import fields
 
 class SahamResource(resources.ModelResource):
+    symbol = fields.Field(attribute="symbol", column_name="symbol")
+    long_name = fields.Field(attribute="long_name", column_name="long_name")
+    papan_pencatatan = fields.Field(attribute="papan_pencatatan", column_name="papan_pencatatan")
+    sektor = fields.Field(attribute="sektor", column_name="sektor")
+
     class Meta:
         model = Saham
-        fields = (
-            "id",
-            "symbol",
-            "nama_perusahaan",
-            "tanggal_listing",
-            "current_share",
-            "papan_pencatatan",
-            "sektor",
-        )
-        export_order = fields
-        
+        import_id_fields = ["symbol"]  
+        fields = ("symbol", "long_name", "papan_pencatatan", "sektor")
+
 @admin.register(Saham)
 class SahamAdmin(ImportExportModelAdmin):
     resource_class = SahamResource
-
-    list_display = (
-        "symbol",
-        "nama_perusahaan",
-        "sektor",
-        "papan_pencatatan",
-        "current_share",
-        "tanggal_listing",
-    )
-
-    search_fields = ("symbol", "nama_perusahaan", "sektor")
-    list_filter = ("papan_pencatatan", "sektor")
-    ordering = ("symbol",)
+    
+    list_display = ("symbol", "sektor", "last_updated")
+    search_fields = ("symbol", "long_name", "sektor", "papan_pencatatan")
 
 class TopicResource(resources.ModelResource):
     class Meta:
