@@ -1,17 +1,17 @@
 
 {% extends 'home/base.html' %}
-{% block title %}{{ webname }} - Tegas, Cepat dan Berimbang{% endblock %}
+{% block title %}{{ webname }} - Temukan Makna{% endblock %}
 {% block meta %}
     <meta name="description" content="{{ web_name }}">
-    <meta name="keywords" content="Tegas, Cepat, Berimbang, Berita Makassar, Berita Sulawesi Selatan, Terkini, Berita Terbaru">
-    <meta name="author" content="LosariPost.com">
+    <meta name="keywords" content="FindStock, Pasar Modal, Saham, ETF, Berita Investasi, Analisis Saham, Alat Investasi, Komunitas Investor, AI untuk Investasi">
+    <meta name="author" content="FindStock">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="google" content="notranslate">
-    <meta name="news_keywords" content="LosariPost, Berita Terkini, Berita Terpopuler, Info Berita Terupdate, PSM, info Bola" />
+    <meta name="news_keywords" content="FindStock, Seputar Pasar Modal dan Investasi" />
 {% endblock %}
 {% block content %}
-    <main class="hero-section">
+    <div class="hero-section">
         <div class="market-nav">
             <a href="#" class="market-link active">US</a>
             <a href="#" class="market-link">Europe</a>
@@ -78,13 +78,13 @@
                 </div>
             </div>
         </div>
+
 <form method="get" action="{% url 'article_list' %}" class="hero-search-container">
     <i class="fas fa-search search-icon-input"></i>
     <input type="text" name="search" placeholder="Search for stocks, ETFs and more" value="{{ search_query|default:'' }}">
 </form>
-        <div class="wave-container"></div>
-
-        <div class="content-area">
+</div>
+    <main class="content-area">
             <div class="main-content">
                 <section class="top-movers">
                     <h2>Top movers in your lists</h2>
@@ -309,9 +309,6 @@
 
                     </div>
                 </div>
-
-            
             </aside>
-        </div>
     </main>
 {% endblock %}

@@ -1,90 +1,600 @@
 {% extends 'home/base.html' %}
 {% block title %}{{ saham.symbol }} - FindStock{% endblock %}
 {% block description %}{{ article.excerpt }}{% endblock %}
-{% block meta %}<meta name="description" content="{{ article.content|striptags|truncatechars:160 }}">
-    <meta name="keywords" content="Tegas, Cepat, Berimbang, Berita Makassar, Berita Indonesia, {{ article.category }}, Makassar terkini, berita terbaru {{ article.category }}">
-    <meta name="author" content="LosariPost">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
-    <meta name="google" content="notranslate">
-    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
-    <meta property="og:title" content="{{ article.title }} - {{ web_title }}">
-    <meta property="og:description" content="{{ article.content|striptags|truncatechars:160 }}">
-    <meta property="og:image" content="https://losaripost.com{{ article.featured_image.url }}">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:type" content="news">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ article.title }} - {{ web_title }}">
-    <meta name="twitter:description" content="{{ article.content|striptags|truncatechars:160 }}">
-    <meta name="twitter:image" content="https://losaripost.com{{ article.featured_image.url }}">
+{% block meta %}
+<meta name="description" content="FindStock.id — Platform analisis saham, data pasar, berita finansial, dan insight investasi. {{ article.content|striptags|truncatechars:160 }}">
+<meta name="keywords" content="Saham, Analisis Saham, FindStock, Pasar Modal, IDX, IHSG, Investasi, {{ article.category }}, Berita Saham, Riset Saham, Data Saham Indonesia">
+<meta name="author" content="FindStock.id">
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
+<meta name="google" content="notranslate">
+
+<!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+<meta property="og:title" content="{{ article.title }} - FindStock.id">
+<meta property="og:description" content="Analisis saham dan berita finansial terbaru dari FindStock.id. {{ article.content|striptags|truncatechars:160 }}">
+<meta property="og:image" content="https://findstock.id{{ article.featured_image.url }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:type" content="article">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ article.title }} - FindStock.id">
+<meta name="twitter:description" content="FindStock.id — Berita dan analisis saham terkini. {{ article.content|striptags|truncatechars:160 }}">
+<meta name="twitter:image" content="https://findstock.id{{ article.featured_image.url }}">
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
 {% endblock %}
 {% block content %}
-        <main class="hero-section">
-        <div class="ticker-container">
-            <div class="ticker-item down">
-                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
-                <div class="ticker-info">
-                    <span class="ticker-name">Bitcoin (BTC / IDR)</span>
-                    <span class="ticker-price">1,544,931,905.60</span>
-                </div>
-                <div class="ticker-change">
-                    <span class="percent">-0.67%</span>
-                    <span class="value">-10,449,363.90</span>
-                </div>
-            </div>
-            <div class="ticker-item down">
-                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
-                <div class="ticker-info">
-                    <span class="ticker-name">Ether (ETH / IDR)</span>
-                    <span class="ticker-price">51,988,153.03</span>
-                </div>
-                <div class="ticker-change">
-                    <span class="percent">-0.0092%</span>
-                    <span class="value">-269,204.68</span>
-                </div>
-            </div>
-            <div class="ticker-item up">
-                <div class="ticker-arrow"><i class="fas fa-arrow-up"></i></div>
-                <div class="ticker-info">
-                    <span class="ticker-name">Solana (SOL / IDR)</span>
-                    <span class="ticker-price">2,361,060.3024</span>
-                </div>
-                <div class="ticker-change">
-                    <span classs="percent">+0.27%</span>
-                    <span class="value">+6,296.2828</span>
-                </div>
-            </div>
-            <div class="ticker-item down">
-                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
-                <div class="ticker-info">
-                    <span class="ticker-name">XRP (XRP / IDR)</span>
-                    <span class="ticker-price">36,956.7548</span>
-                </div>
-                <div class="ticker-change">
-                    <span class="percent">-0.36%</span>
-                    <span class="value">-132.8669</span>
-                </div>
-            </div>
-            <div class="ticker-item down">
-                 <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
-                <div class="ticker-info">
-                    <span class="ticker-name">Dogecoin (DOGE / IDR)</span>
-                    <span class="ticker-price">2,694.95</span>
-                </div>
-                 <div class="ticker-change">
-                    <span class="percent">-0.45%</span>
-                    <span class="value">-12.21</span>
-                </div>
-            </div>
-        </div>
-    
-        <div class="wave-container"></div>
 
         <div class="content-area">
             <div class="main-content">
-            <section class="top-movers">
-            <h2>Saham {{ saham.symbol }}</h2>
+           
+
+            
+    <article class="article-full">
+                    <header class="article-header">
+                <h1 class="long-name">{{ saham.long_name }}</h1>
+                <p class="symbol">{{ saham.symbol }} - IDR</p>
+                    </header>
+        <div class="price-section">
+            <h2 class="current-price">{{ saham.price|floatformat:2 }}</h2>
+            <p class="change up">{{ saham.change|floatformat:2 }} ({{ saham.change_pct|floatformat:2 }}%)</p>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric">
+                <p class="label">Previous Close</p>
+                <p class="value">{{ saham.prev_close|floatformat:2 }}</p>
+            </div>
+            <div class="metric">
+                <p class="label">Open</p>
+                <p class="value">{{ saham.open_price|floatformat:2 }}</p>
+            </div>
+            <div class="metric">
+                <p class="label">Volume</p>
+                <p class="value format-idr">{{ saham.volume }}</p>
+            </div>
+            <div class="metric">
+                <p class="label">Market Cap</p>
+                <p class="value format-idr">{{ saham.market_cap }}</p>
+            </div>
+            <div class="metric">
+                <p class="label">PBV</p>
+                <p class="value">{{ saham.pbv }}</p>
+            </div>
+            <div class="metric">
+                <p class="label">EPS (TTM)</p>
+                <p class="value">{{ saham.eps_ttm }}</p>
+            </div>
+            <div class="metric">
+                <p class="label">Dividend Yield</p>
+                <p class="value">{{ saham.div_yield }}</p>
+            </div>
+                        <div class="metric">
+                <p class="label">Day's Range</p>
+                <p class="value">{{ saham.day_range }}</p>
+            </div>
+            <div class="metric">
+                <p class="label">52 Week Range</p>
+                <p class="value">{{ saham.week_range }}</p>
+            </div>
+        </div>
+
+                </article>
+
+
+        <div class="collapse-section">
+            <div class="collapse-header" onclick="toggleCollapse(this)">
+                <div class="collapse-title">
+                    Rasio Valuasi
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="collapse-content">
+                <div class="content-inner">
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Price to Earnings (PER)</div>
+                            <div class="metric-value">18.5x</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Price to Book Value (PBV)</div>
+                            <div class="metric-value">4.2x</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Dividend Yield</div>
+                            <div class="metric-value positive">3.8%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Earning Per Share (EPS)</div>
+                            <div class="metric-value">554</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse-section">
+            <div class="collapse-header" onclick="toggleCollapse(this)">
+                <div class="collapse-title">
+                    Kinerja Keuangan
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="collapse-content">
+                <div class="content-inner">
+                    <div class="info-row">
+                        <span class="info-label">Pendapatan (Revenue)</span>
+                        <span class="info-value highlight">Rp 115,2 T</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Laba Bersih (Net Income)</span>
+                        <span class="info-value positive">Rp 42,8 T</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Total Aset</span>
+                        <span class="info-value highlight">Rp 1.385,7 T</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Total Ekuitas</span>
+                        <span class="info-value highlight">Rp 248,5 T</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Return on Equity (ROE)</span>
+                        <span class="info-value positive">17,2%</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Return on Assets (ROA)</span>
+                        <span class="info-value positive">3,1%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse-section">
+            <div class="collapse-header" onclick="toggleCollapse(this)">
+                <div class="collapse-title">
+                    Pendapatan 10 Tahun Terakhir
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="collapse-content">
+                <div class="content-inner">
+                    <div class="timeline-container">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-bar-container">
+                                <div class="timeline-bar" style="width: 100%;">
+                                    <span class="timeline-value">Rp 115,2 T</span>
+                                </div>
+                            </div>
+                            <div class="timeline-growth positive">+8.5%</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-bar-container">
+                                <div class="timeline-bar" style="width: 92%;">
+                                    <span class="timeline-value">Rp 106,1 T</span>
+                                </div>
+                            </div>
+                            <div class="timeline-growth positive">+7.2%</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2022</div>
+                            <div class="timeline-bar-container">
+                                <div class="timeline-bar" style="width: 86%;">
+                                    <span class="timeline-value">Rp 98,9 T</span>
+                                </div>
+                            </div>
+                            <div class="timeline-growth positive">+9.8%</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-bar-container">
+                                <div class="timeline-bar" style="width: 78%;">
+                                    <span class="timeline-value">Rp 90,1 T</span>
+                                </div>
+                            </div>
+                            <div class="timeline-growth positive">+5.3%</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2020</div>
+                            <div class="timeline-bar-container">
+                                <div class="timeline-bar" style="width: 74%;">
+                                    <span class="timeline-value">Rp 85,5 T</span>
+                                </div>
+                            </div>
+                            <div class="timeline-growth negative">-2.1%</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2019</div>
+                            <div class="timeline-bar-container">
+                                <div class="timeline-bar" style="width: 76%;">
+                                    <span class="timeline-value">Rp 87,3 T</span>
+                                </div>
+                            </div>
+                            <div class="timeline-growth positive">+6.7%</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2018</div>
+                            <div class="timeline-bar-container">
+                                <div class="timeline-bar" style="width: 71%;">
+                                    <span class="timeline-value">Rp 81,8 T</span>
+                                </div>
+                            </div>
+                            <div class="timeline-growth positive">+8.1%</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2017</div>
+                            <div class="timeline-bar-container">
+                                <div class="timeline-bar" style="width: 66%;">
+                                    <span class="timeline-value">Rp 75,7 T</span>
+                                </div>
+                            </div>
+                            <div class="timeline-growth positive">+7.4%</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2016</div>
+                            <div class="timeline-bar-container">
+                                <div class="timeline-bar" style="width: 61%;">
+                                    <span class="timeline-value">Rp 70,5 T</span>
+                                </div>
+                            </div>
+                            <div class="timeline-growth positive">+6.9%</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2015</div>
+                            <div class="timeline-bar-container">
+                                <div class="timeline-bar" style="width: 100%;">
+                                    <span class="timeline-value">Rp 65,9 T</span>
+                                </div>
+                            </div>
+                            <div class="timeline-growth positive">+5.2%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse-section">
+            <div class="collapse-header" onclick="toggleCollapse(this)">
+                <div class="collapse-title">
+                    Laba Bersih 10 Tahun Terakhir
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="collapse-content">
+                <div class="content-inner">
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Tahun</th>
+                                    <th>Laba Bersih</th>
+                                    <th>Growth</th>
+                                    <th>Net Margin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="year-cell">2024</td>
+                                    <td class="value-cell">Rp 42,8 T</td>
+                                    <td class="growth-cell positive">+9.2%</td>
+                                    <td class="margin-cell">37,1%</td>
+                                </tr>
+                                <tr>
+                                    <td class="year-cell">2023</td>
+                                    <td class="value-cell">Rp 39,2 T</td>
+                                    <td class="growth-cell positive">+8.5%</td>
+                                    <td class="margin-cell">36,9%</td>
+                                </tr>
+                                <tr>
+                                    <td class="year-cell">2022</td>
+                                    <td class="value-cell">Rp 36,1 T</td>
+                                    <td class="growth-cell positive">+10.3%</td>
+                                    <td class="margin-cell">36,5%</td>
+                                </tr>
+                                <tr>
+                                    <td class="year-cell">2021</td>
+                                    <td class="value-cell">Rp 32,7 T</td>
+                                    <td class="growth-cell positive">+6.8%</td>
+                                    <td class="margin-cell">36,3%</td>
+                                </tr>
+                                <tr>
+                                    <td class="year-cell">2020</td>
+                                    <td class="value-cell">Rp 30,6 T</td>
+                                    <td class="growth-cell negative">-3.5%</td>
+                                    <td class="margin-cell">35,8%</td>
+                                </tr>
+                                <tr>
+                                    <td class="year-cell">2019</td>
+                                    <td class="value-cell">Rp 31,7 T</td>
+                                    <td class="growth-cell positive">+7.1%</td>
+                                    <td class="margin-cell">36,3%</td>
+                                </tr>
+                                <tr>
+                                    <td class="year-cell">2018</td>
+                                    <td class="value-cell">Rp 29,6 T</td>
+                                    <td class="growth-cell positive">+8.9%</td>
+                                    <td class="margin-cell">36,2%</td>
+                                </tr>
+                                <tr>
+                                    <td class="year-cell">2017</td>
+                                    <td class="value-cell">Rp 27,2 T</td>
+                                    <td class="growth-cell positive">+7.6%</td>
+                                    <td class="margin-cell">35,9%</td>
+                                </tr>
+                                <tr>
+                                    <td class="year-cell">2016</td>
+                                    <td class="value-cell">Rp 25,3 T</td>
+                                    <td class="growth-cell positive">+6.4%</td>
+                                    <td class="margin-cell">35,9%</td>
+                                </tr>
+                                <tr>
+                                    <td class="year-cell">2015</td>
+                                    <td class="value-cell">Rp 23,8 T</td>
+                                    <td class="growth-cell positive">+5.8%</td>
+                                    <td class="margin-cell">36,1%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="collapse-section">
+            <div class="collapse-header" onclick="toggleCollapse(this)">
+                <div class="collapse-title">
+                    Profitabilitas
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="collapse-content">
+                <div class="content-inner">
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Net Profit Margin</div>
+                            <div class="metric-value positive">37,1%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Operating Margin</div>
+                            <div class="metric-value positive">52,4%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Gross Margin</div>
+                            <div class="metric-value positive">68,9%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">EBITDA Margin</div>
+                            <div class="metric-value positive">55,2%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse-section">
+            <div class="collapse-header" onclick="toggleCollapse(this)">
+                <div class="collapse-title">
+                    Kesehatan Keuangan
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="collapse-content">
+                <div class="content-inner">
+                    <div class="info-row">
+                        <span class="info-label">Debt to Equity Ratio</span>
+                        <span class="info-value">0.8x</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Current Ratio</span>
+                        <span class="info-value positive">1.45</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Quick Ratio</span>
+                        <span class="info-value positive">1.28</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Interest Coverage</span>
+                        <span class="info-value positive">12.5x</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Cash Ratio</span>
+                        <span class="info-value positive">0.95</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="collapse-section">
+            <div class="collapse-header" onclick="toggleCollapse(this)">
+                <div class="collapse-title">
+                    EPS Per Kuartal & Tahunan
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="collapse-content">
+                <div class="content-inner">
+                    <div class="eps-year-container">
+                        <!-- 2024 -->
+                        <div class="eps-year-block">
+                            <div class="eps-year-header">
+                                <div class="eps-year-title">2024</div>
+                                <div class="eps-annual">
+                                    <span class="eps-annual-label">Annual EPS:</span>
+                                    <span class="eps-annual-value">Rp 554</span>
+                                </div>
+                            </div>
+                            <div class="eps-quarters">
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q1</div>
+                                    <div class="quarter-value">Rp 135</div>
+                                    <div class="quarter-growth positive">+8.0%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q2</div>
+                                    <div class="quarter-value">Rp 140</div>
+                                    <div class="quarter-growth positive">+9.4%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q3</div>
+                                    <div class="quarter-value">Rp 138</div>
+                                    <div class="quarter-growth positive">+7.8%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q4</div>
+                                    <div class="quarter-value">Rp 141</div>
+                                    <div class="quarter-growth positive">+8.5%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2023 -->
+                        <div class="eps-year-block">
+                            <div class="eps-year-header">
+                                <div class="eps-year-title">2023</div>
+                                <div class="eps-annual">
+                                    <span class="eps-annual-label">Annual EPS:</span>
+                                    <span class="eps-annual-value">Rp 510</span>
+                                </div>
+                            </div>
+                            <div class="eps-quarters">
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q1</div>
+                                    <div class="quarter-value">Rp 125</div>
+                                    <div class="quarter-growth positive">+6.8%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q2</div>
+                                    <div class="quarter-value">Rp 128</div>
+                                    <div class="quarter-growth positive">+7.6%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q3</div>
+                                    <div class="quarter-value">Rp 128</div>
+                                    <div class="quarter-growth positive">+8.5%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q4</div>
+                                    <div class="quarter-value">Rp 130</div>
+                                    <div class="quarter-growth positive">+8.3%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2022 -->
+                        <div class="eps-year-block">
+                            <div class="eps-year-header">
+                                <div class="eps-year-title">2022</div>
+                                <div class="eps-annual">
+                                    <span class="eps-annual-label">Annual EPS:</span>
+                                    <span class="eps-annual-value">Rp 469</span>
+                                </div>
+                            </div>
+                            <div class="eps-quarters">
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q1</div>
+                                    <div class="quarter-value">Rp 117</div>
+                                    <div class="quarter-growth positive">+9.3%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q2</div>
+                                    <div class="quarter-value">Rp 119</div>
+                                    <div class="quarter-growth positive">+10.2%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q3</div>
+                                    <div class="quarter-value">Rp 118</div>
+                                    <div class="quarter-growth positive">+9.3%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q4</div>
+                                    <div class="quarter-value">Rp 120</div>
+                                    <div class="quarter-growth positive">+11.1%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2021 -->
+                        <div class="eps-year-block">
+                            <div class="eps-year-header">
+                                <div class="eps-year-title">2021</div>
+                                <div class="eps-annual">
+                                    <span class="eps-annual-label">Annual EPS:</span>
+                                    <span class="eps-annual-value">Rp 425</span>
+                                </div>
+                            </div>
+                            <div class="eps-quarters">
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q1</div>
+                                    <div class="quarter-value">Rp 107</div>
+                                    <div class="quarter-growth positive">+5.9%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q2</div>
+                                    <div class="quarter-value">Rp 108</div>
+                                    <div class="quarter-growth positive">+4.9%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q3</div>
+                                    <div class="quarter-value">Rp 108</div>
+                                    <div class="quarter-growth positive">+6.9%</div>
+                                </div>
+                                <div class="eps-quarter-card">
+                                    <div class="quarter-badge">Q4</div>
+                                    <div class="quarter-value">Rp 108</div>
+                                    <div class="quarter-growth positive">+5.9%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <div class="collapse-section">
+            <div class="collapse-header" onclick="toggleCollapse(this)">
+                <div class="collapse-title">
+                    Informasi Perusahaan
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="collapse-content">
+                <div class="content-inner">
+                    <div class="info-row">
+                        <span class="info-label">Sektor</span>
+                        <span class="info-value">Finansial</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Sub-Sektor</span>
+                        <span class="info-value">Perbankan</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Market Cap</span>
+                        <span class="info-value highlight">Rp 1.265 T</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Jumlah Saham Beredar</span>
+                        <span class="info-value">123,5 Miliar</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Tanggal IPO</span>
+                        <span class="info-value">31 Mei 2000</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Papan</span>
+                        <span class="info-value">Utama</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+         <section class="top-movers">
                 <div class="mover-item">
                     <span class="mover-tag">{{ saham.symbol }}</span>
                     <span class="mover-name">{{ saham.nama_perusahaan }}</span>
@@ -115,57 +625,7 @@
                     <span class="mover-action"><i class="fas fa-check-circle"></i></span>
                 </div>
                 </section>
-
-            
-    <article class="article-full">
-                    <header class="article-header">
-                <h1 class="long-name">{{ saham.nama_perusahaan }}</h1>
-                <p class="symbol">{{ saham.symbol }} - IDR</p>
-                    </header>
-        <div class="price-section">
-            <h2 class="current-price">{{ saham.last_price|floatformat:2 }}</h2>
-            <p class="change up">{{ saham.price_change|floatformat:2 }} ({{ saham.percent_change|floatformat:2 }}%)</p>
-        </div>
-        <div class="metrics-grid">
-            <div class="metric">
-                <p class="label">Previous Close</p>
-                <p class="value">{{ saham.previous_close|floatformat:2 }}</p>
-            </div>
-            <div class="metric">
-                <p class="label">Open</p>
-                <p class="value">{{ saham.open_price|floatformat:2 }}</p>
-            </div>
-            <div class="metric">
-                <p class="label">Day's Range</p>
-                <p class="value">{{ saham.day_range }}</p>
-            </div>
-            <div class="metric">
-                <p class="label">52 Week Range</p>
-                <p class="value">{{ saham.week_range }}</p>
-            </div>
-            <div class="metric">
-                <p class="label">Volume</p>
-                <p class="value format-idr">{{ saham.volume }}</p>
-            </div>
-            <div class="metric">
-                <p class="label">Market Cap</p>
-                <p class="value format-idr">{{ saham.market_cap }}</p>
-            </div>
-            <div class="metric">
-                <p class="label">PBV</p>
-                <p class="value">{{ saham.pbv }}</p>
-            </div>
-            <div class="metric">
-                <p class="label">EPS (TTM)</p>
-                <p class="value">{{ saham.eps_ttm }}</p>
-            </div>
-            <div class="metric">
-                <p class="label">Dividend Yield</p>
-                <p class="value">{{ saham.div_yield }}</p>
-            </div>
-        </div>
-
-                </article>
+        <p style="color: brown;">Data Palsu, kami masih tahap dalam pengembangan model..</p>
                 <section class="financial-news">
                     <div class="news-filters">
                         {% if topics %}
@@ -203,7 +663,7 @@
                         <span>FOUNDED</span>
                     </div>
                     <div class="info-value">
-                        <span>{% if saham.firt_trade_date %} {% else %} Data Tidak Tersedia {% endif %}</span>
+                        <span>{{ saham.firt_trade_date }}</span>
                     </div>
                 </div>
                 </div>
@@ -323,7 +783,6 @@
             
             </aside>
         </div>
-    </main>
 <script>
     document.querySelectorAll('.format-idr').forEach(el => {
         let number = parseFloat(el.innerText);
@@ -335,4 +794,14 @@
         }
     });
 </script>
+<script>
+        function toggleCollapse(element) {
+            const section = element.closest('.collapse-section');
+            const content = section.querySelector('.collapse-content');
+            const arrow = element.querySelector('.arrow');
+            
+            content.classList.toggle('active');
+            arrow.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+    </script>
 {% endblock %}

@@ -2,24 +2,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}LosariPost.com{% endblock %}</title>
-    {% block meta %}{% endblock %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'home.css' %}?v={{ STATIC_VERSION }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="/media/logo/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/media/logo/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/media/logo/favicon-16x16.png">
-    <link rel="manifest" href="/media/logo/site.webmanifest">
-    <meta name="google-site-verification" content="2ADLzof7vk2ZBBWzYd5L-sjTt8UDt5CVccMYymppA8s" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}FindStock.Id{% endblock %}</title>
+{% block meta %}{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'home.css' %}?v={{ STATIC_VERSION }}">
+<link rel="apple-touch-icon" sizes="180x180" href="/media/logo/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/media/logo/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/media/logo/favicon-16x16.png">
+<link rel="manifest" href="/media/logo/site.webmanifest">
+<meta name="google-site-verification" content="2ADLzof7vk2ZBBWzYd5L-sjTt8UDt5CVccMYymppA8s" />
 </head>
 <body>
     <header class="site-header">
         <nav class="navbar">
             <div class="nav-left">
-                <a href="/" class="logo-main">FindStock</a>
+                <a href="/" class="logo-main">
+                    <img src="/media/logo/logo.png" alt="FindStock.Id">
+                </a>
             </div>
             <!-- Mobile Menu Structure -->
             <div class="nav-menu-container">
@@ -89,7 +91,9 @@
     <footer class="site-footer-container">
         <div class="site-footer-main">
             <div class="footer-about">
-                <h3 class="footer-logo">findi.id</h3>
+                <h3 class="footer-logo">
+                    <img src="/media/logo/logo.png" class="footer-logo" alt="FindStock.Id">
+                </h3>
                 <p>A modern financial platform to help you track, analyze, and manage your investments with confidence.</p>
                 <div class="footer-social-icons">
                     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -137,15 +141,13 @@
             </div>
         </div>
         <div class="site-footer-bottom">
-            <p>&copy; 2024 findi.id. All rights reserved.</p>
+            <p>&copy; 2024 {{webname}}. All rights reserved.</p>
             <div class="footer-bottom-right">
                 <a href="#">Terms & Conditions</a>
                 <a href="#">Privacy Policy</a>
             </div>
         </div>
     </footer>
-
-
     <script src="/static/js/main_home.js?v={{ STATIC_VERSION }}"></script>
 </body>
 </html>

@@ -95,7 +95,7 @@ class Saham(models.Model):
     sektor = models.CharField(max_length=100, null=True, blank=True)
     papan_pencatatan = models.CharField(max_length=100, null=True, blank=True)
     logo = models.ImageField(upload_to=rename_logo_saham, null=True, blank=True)
-    firt_trade_date = models.BigIntegerField(null=True, blank=True)
+    firt_trade_date = models.DateTimeField(null=True, blank=True)
 
     # Harga pasar
     price = models.FloatField(null=True, blank=True)

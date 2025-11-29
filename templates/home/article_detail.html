@@ -1,86 +1,29 @@
 {% extends 'home/base.html' %}
-{% block title %}{{ article.title }} - LosariPost{% endblock %}
+{% block title %}{{ article.title }} - FindStock{% endblock %}
 {% block description %}{{ article.excerpt }}{% endblock %}
-{% block meta %}<meta name="description" content="{{ article.content|striptags|truncatechars:160 }}">
-    <meta name="keywords" content="Tegas, Cepat, Berimbang, Berita Makassar, Berita Indonesia, {{ article.category }}, Makassar terkini, berita terbaru {{ article.category }}">
-    <meta name="author" content="LosariPost">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
-    <meta name="google" content="notranslate">
-    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
-    <meta property="og:title" content="{{ article.title }} - {{ web_title }}">
-    <meta property="og:description" content="{{ article.content|striptags|truncatechars:160 }}">
-    <meta property="og:image" content="https://losaripost.com{{ article.featured_image.url }}">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:type" content="news">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ article.title }} - {{ web_title }}">
-    <meta name="twitter:description" content="{{ article.content|striptags|truncatechars:160 }}">
-    <meta name="twitter:image" content="https://losaripost.com{{ article.featured_image.url }}">
+{% block meta %}<meta name="description" content="FindStock.id — Platform analisis saham, data pasar, berita finansial, dan insight investasi. {{ article.content|striptags|truncatechars:160 }}">
+<meta name="keywords" content="Saham, Analisis Saham, FindStock, Pasar Modal, IDX, IHSG, Investasi, {{ article.category }}, Berita Saham, Riset Saham, Data Saham Indonesia">
+<meta name="author" content="FindStock.id">
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
+<meta name="google" content="notranslate">
+
+<!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+<meta property="og:title" content="{{ article.title }} - FindStock.id">
+<meta property="og:description" content="Analisis saham dan berita finansial terbaru dari FindStock.id. {{ article.content|striptags|truncatechars:160 }}">
+<meta property="og:image" content="https://findstock.id{{ article.featured_image.url }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:type" content="article">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ article.title }} - FindStock.id">
+<meta name="twitter:description" content="FindStock.id — Berita dan analisis saham terkini. {{ article.content|striptags|truncatechars:160 }}">
+<meta name="twitter:image" content="https://findstock.id{{ article.featured_image.url }}">
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
-        <main class="hero-section">
-        <div class="ticker-container">
-            <div class="ticker-item down">
-                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
-                <div class="ticker-info">
-                    <span class="ticker-name">Bitcoin (BTC / IDR)</span>
-                    <span class="ticker-price">1,544,931,905.60</span>
-                </div>
-                <div class="ticker-change">
-                    <span class="percent">-0.67%</span>
-                    <span class="value">-10,449,363.90</span>
-                </div>
-            </div>
-            <div class="ticker-item down">
-                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
-                <div class="ticker-info">
-                    <span class="ticker-name">Ether (ETH / IDR)</span>
-                    <span class="ticker-price">51,988,153.03</span>
-                </div>
-                <div class="ticker-change">
-                    <span class="percent">-0.0092%</span>
-                    <span class="value">-269,204.68</span>
-                </div>
-            </div>
-            <div class="ticker-item up">
-                <div class="ticker-arrow"><i class="fas fa-arrow-up"></i></div>
-                <div class="ticker-info">
-                    <span class="ticker-name">Solana (SOL / IDR)</span>
-                    <span class="ticker-price">2,361,060.3024</span>
-                </div>
-                <div class="ticker-change">
-                    <span classs="percent">+0.27%</span>
-                    <span class="value">+6,296.2828</span>
-                </div>
-            </div>
-            <div class="ticker-item down">
-                <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
-                <div class="ticker-info">
-                    <span class="ticker-name">XRP (XRP / IDR)</span>
-                    <span class="ticker-price">36,956.7548</span>
-                </div>
-                <div class="ticker-change">
-                    <span class="percent">-0.36%</span>
-                    <span class="value">-132.8669</span>
-                </div>
-            </div>
-            <div class="ticker-item down">
-                 <div class="ticker-arrow"><i class="fas fa-arrow-down"></i></div>
-                <div class="ticker-info">
-                    <span class="ticker-name">Dogecoin (DOGE / IDR)</span>
-                    <span class="ticker-price">2,694.95</span>
-                </div>
-                 <div class="ticker-change">
-                    <span class="percent">-0.45%</span>
-                    <span class="value">-12.21</span>
-                </div>
-            </div>
-        </div>
-    
-        <div class="wave-container"></div>
-
         <div class="content-area">
             <div class="main-content">
                 <article class="article-full">
@@ -88,7 +31,7 @@
                         <h1>{{ article.title }}</h1>
                         <div class="article-meta">
                             <span class="article-source">{{ article.author.username }}</span>
-                            <span class="article-date">Published on {{ article.created_at|date:"d F Y" }}</span>
+                            <span class="article-date"><b>Published on</b> {{ article.created_at|date:"d F Y" }}</span>
                         </div>
                     </header>
                     <img src="{{ article.featured_image.url }}" alt="{{ article.title }}" class="article-main-image">
@@ -239,6 +182,5 @@
             
             </aside>
         </div>
-    </main>
 
 {% endblock %}

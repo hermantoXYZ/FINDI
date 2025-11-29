@@ -44,6 +44,7 @@ urlpatterns += (
     path('topic/<slug:slug>/', views.topic_articles, name='topic_articles'),
     path('page/<slug:slug>/', views.page_detail, name='page_detail'),
     path('saham/<str:symbol>/', views.saham_detail, name='saham_detail'),
+    path('kalkulator/investasi', views.kalkulator_investasi, name='kalkulator_investasi'),
 )
 
 

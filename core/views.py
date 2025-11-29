@@ -201,6 +201,12 @@ def about(request):
     }
     return render(request,'about.html', context) 
 
+def kalkulator_investasi(request):
+    context = {
+        'title' : 'Kalkulator Investasi',
+        'heading' : 'KALKULATOR INVESTASI' 
+    }
+    return render(request,'home/kalkulator_investasi.html', context)
 
 def saham_detail(request, symbol):
     saham = get_object_or_404(Saham, symbol=symbol.upper())

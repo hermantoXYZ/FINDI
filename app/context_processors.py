@@ -8,7 +8,7 @@ def web_name(request):
     return {
         'baseurl': 'http://127.0.0.1:8000/',
         'web_name': 'FindStock - Grow Your Wealth with Confidence',
-        'webname': 'FindStock',
+        'webname': 'FindStock.Id',
         'address': 'Makassar',
         'telp': '0877 7579 5886',
         'fax': '(0411) 889464',

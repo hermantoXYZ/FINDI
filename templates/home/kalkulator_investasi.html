@@ -1,0 +1,355 @@
+{% extends 'home/base.html' %}
+{% block title %}Kalkulator Investasi | FindStockID {% endblock %}
+{% block description %}{{ article.excerpt }}{% endblock %}
+{% block meta %}
+    <meta name="description" content="Kalkulator untuk menghitung berapa yang harus ditabung setiap bulan agar mencapai target tabungan 2 milyar rupiah pada usia 50 tahun.">
+    <meta name="keywords" content="kalkulator investasi, tabungan 2 milyar, investasi, perencanaan keuangan">
+    <meta name="author" content="FINDI.ID">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+    <style>
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 700px;
+            margin: 20px auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            line-height: 1.5;
+        }
+
+        .settings {
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .setting-row {
+            margin-bottom: 20px;
+        }
+
+        .setting-row:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 1.3em;
+            color: #667eea;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .result-section {
+            margin: 30px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #000000 0%, #646464 100%);
+        }
+
+        th {
+            color: white;
+            padding: 12px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+            background: #e3f2fd;
+        }
+
+        .highlight {
+            background: #fff9c4 !important;
+            color: #f57c00;
+        }
+
+        .breakdown {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .breakdown h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-label {
+            color: #666;
+        }
+
+        .breakdown-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .info-box {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 5px solid #4caf50;
+        }
+
+        .info-box p {
+            color: #2e7d32;
+            line-height: 1.6;
+            margin: 5px 0;
+        }
+
+        .formula-note {
+            background: #a6ff00;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #000000;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+
+<main class="content-area">
+            <div class="main-content">
+                <article class="article-full">
+                    <header class="article-header">
+                        <h1>{{ page.title }}</h1>
+                    </header>
+        <h1>Kalkulator Investasi, Sooner the Better:</h1>
+ <div class="formula-note">
+            <p>Untuk bisa menabung 2 Milyar Rupiah pada usia 50
+maka tiap bulan kita harus menabung:</p>
+        </div>
+
+        <div class="settings">
+            <div class="setting-row">
+                <label>Target Dana (Rupiah):</label>
+                <input type="number" id="targetAmount" value="2000000000" step="100000000">
+            </div>
+
+            <div class="setting-row">
+                <label>Usia Start:</label>
+                <input type="range" id="ageSlider" min="20" max="45" value="25" step="1">
+                <div class="slider-value"><span id="ageValue">25</span> tahun</div>
+            </div>
+
+            <div class="setting-row">
+                <label>Return Investasi per Tahun (%):</label>
+                <input type="range" id="returnSlider" min="0" max="20" value="8" step="0.5">
+                <div class="slider-value"><span id="returnValue">8</span>%</div>
+            </div>
+        </div>
+
+        <div class="result-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usia Start</th>
+                        <th>Tabungan / bulan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight">
+                        <td id="displayAge">25</td>
+                        <td id="displayMonthly">Rp. 0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="breakdown">
+            <h3>Rincian Tabungan:</h3>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Tabungan per Hari:</span>
+                <span class="breakdown-value" id="perDay">Rp. 0</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Tabungan per Bulan:</span>
+                <span class="breakdown-value" id="perMonth">Rp. 0</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Tabungan per Tahun:</span>
+                <span class="breakdown-value" id="perYear">Rp. 0</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Lama Investasi:</span>
+                <span class="breakdown-value" id="duration">0 tahun</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Total Uang Anda:</span>
+                <span class="breakdown-value" id="totalDeposit">Rp. 0</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Keuntungan Investasi:</span>
+                <span class="breakdown-value" id="profit" style="color: #4caf50;">Rp. 0</span>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <p><strong>Insight:</strong></p>
+            <p id="insightText"></p>
+        </div>
+    </div>
+                </article>
+        </main>
+
+    <script>
+        function formatRupiah(number) {
+            return 'Rp. ' + Math.round(number).toLocaleString('id-ID');
+        }
+
+        function calculateMonthlyPayment(targetAmount, ageStart, returnRate) {
+            const targetAge = 50;
+            const years = targetAge - ageStart;
+            const months = years * 12;
+            
+            // Convert annual return to monthly return
+            const monthlyReturn = returnRate / 100 / 12;
+            
+            // Formula: PMT = FV * r / ((1 + r)^n - 1)
+            // where FV = future value, r = monthly return, n = number of months
+            
+            let monthlyPayment;
+            
+            if (monthlyReturn === 0) {
+                // If no return, just divide target by number of months
+                monthlyPayment = targetAmount / months;
+            } else {
+                monthlyPayment = targetAmount * monthlyReturn / (Math.pow(1 + monthlyReturn, months) - 1);
+            }
+            
+            return {
+                monthly: monthlyPayment,
+                daily: monthlyPayment / 30,
+                yearly: monthlyPayment * 12,
+                years: years,
+                months: months,
+                totalDeposit: monthlyPayment * months,
+                profit: targetAmount - (monthlyPayment * months)
+            };
+        }
+
+        function updateDisplay() {
+            const targetAmount = parseFloat(document.getElementById('targetAmount').value);
+            const age = parseInt(document.getElementById('ageSlider').value);
+            const returnRate = parseFloat(document.getElementById('returnSlider').value);
+
+            document.getElementById('ageValue').textContent = age;
+            document.getElementById('returnValue').textContent = returnRate;
+
+            const result = calculateMonthlyPayment(targetAmount, age, returnRate);
+
+            document.getElementById('displayAge').textContent = age;
+            document.getElementById('displayMonthly').textContent = formatRupiah(result.monthly);
+            
+            document.getElementById('perDay').textContent = formatRupiah(result.daily);
+            document.getElementById('perMonth').textContent = formatRupiah(result.monthly);
+            document.getElementById('perYear').textContent = formatRupiah(result.yearly);
+            document.getElementById('duration').textContent = result.years + ' tahun (' + result.months + ' bulan)';
+            document.getElementById('totalDeposit').textContent = formatRupiah(result.totalDeposit);
+            document.getElementById('profit').textContent = formatRupiah(result.profit);
+
+            // Calculate comparison with age 25
+            const baselineResult = calculateMonthlyPayment(targetAmount, 25, returnRate);
+            
+            let insight = '';
+            if (age === 25) {
+                insight = `Anda memulai di usia yang ideal! Dengan return ${returnRate}% per tahun, uang Anda akan berkembang menjadi ${formatRupiah(targetAmount)}. Dari total tersebut, ${formatRupiah(result.totalDeposit)} adalah uang Anda sendiri, dan ${formatRupiah(result.profit)} adalah hasil investasi.`;
+            } else if (age < 25) {
+                const saved = baselineResult.monthly - result.monthly;
+                const percentSaved = ((saved / baselineResult.monthly) * 100).toFixed(1);
+                insight = `Luar biasa! Dengan mulai lebih awal, Anda menghemat ${formatRupiah(saved)} per bulan (${percentSaved}% lebih ringan) dibanding mulai di usia 25.`;
+            } else {
+                const extra = result.monthly - baselineResult.monthly;
+                const percentExtra = ((extra / baselineResult.monthly) * 100).toFixed(1);
+                insight = `Dengan mulai di usia ${age}, Anda perlu menabung ${formatRupiah(extra)} lebih banyak per bulan (${percentExtra}% lebih tinggi) dibanding mulai di usia 25. Namun tidak ada kata terlambat - mulai sekarang lebih baik daripada menunda!`;
+            }
+
+            document.getElementById('insightText').textContent = insight;
+        }
+
+        document.getElementById('targetAmount').addEventListener('input', updateDisplay);
+        document.getElementById('ageSlider').addEventListener('input', updateDisplay);
+        document.getElementById('returnSlider').addEventListener('input', updateDisplay);
+        
+        updateDisplay();
+    </script>
+{% endblock %}
