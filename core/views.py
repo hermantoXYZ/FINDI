@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from app.models import Article, Category, Page, UserAnggota, Topic, Saham
+from app.models import Article, Category, Page, UserAnggota, Topic, Saham, Dividend
 from django.db.models import Count, Q
 from django.utils.text import slugify
 from app.forms_anggota import formUserRegisterAnggota
@@ -231,8 +231,13 @@ def kalkulator_investasi(request):
 
 def saham_detail(request, symbol):
     saham = get_object_or_404(Saham, symbol=symbol.upper())
+    dividends = saham.dividends.order_by('-period')
+    top_volumes = ( Saham.objects .filter(volume__isnull=False) .order_by('-volume')[:15] )
+
     context = {
         'saham': saham,
+        'dividends': dividends,
+        'top_volumes': top_volumes
     }
     return render(request, 'home/saham_detail.html', context)
 

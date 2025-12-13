@@ -1,5 +1,6 @@
 {% extends 'home/base.html' %}
-{% block title %}{{ saham.symbol }} - FindStock{% endblock %}
+{% load humanize %}
+{% block title %}Saham {{ saham.symbol }} - {{ saham.long_name}} - FindStock{% endblock %}
 {% block description %}{{ article.excerpt }}{% endblock %}
 {% block meta %}
 <meta name="description" content="FindStock.id — Platform analisis saham, data pasar, berita finansial, dan insight investasi. {{ article.content|striptags|truncatechars:160 }}">
@@ -86,6 +87,46 @@
         <div class="collapse-section">
             <div class="collapse-header" onclick="toggleCollapse(this)">
                 <div class="collapse-title">
+                    Devidend {{ saham.symbol }}
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="collapse-content">
+                <div class="content-inner">
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Periode</th>
+                                    <th>Devidend</th>
+                                    <th>Ex Date</th>
+                                    <th>Pay Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for dividend in dividends %}
+                                <tr>
+                                    <td class="year-cell">{{ dividend.period }}</td>
+                                    <td class="value-cell positive">{{ dividend.dividend|floatformat:2 }}</td>
+                                    <td class="growth-cell">{{ dividend.ex_date }}</td>
+                                    <td class="margin-cell">{{ dividend.pay_date }}</td>
+                                </tr>  
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="no-data">No dividend data available.</td>
+                                </tr> 
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div class="collapse-section">
+            <div class="collapse-header" onclick="toggleCollapse(this)">
+                <div class="collapse-title">
                     Rasio Valuasi
                 </div>
                 <span class="arrow">▼</span>
@@ -112,8 +153,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div> -->
+<!-- 
         <div class="collapse-section">
             <div class="collapse-header" onclick="toggleCollapse(this)">
                 <div class="collapse-title">
@@ -149,8 +190,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div> -->
+<!-- 
         <div class="collapse-section">
             <div class="collapse-header" onclick="toggleCollapse(this)">
                 <div class="collapse-title">
@@ -418,9 +459,9 @@
             </div>
             <div class="collapse-content">
                 <div class="content-inner">
-                    <div class="eps-year-container">
+                    <div class="eps-year-container"> -->
                         <!-- 2024 -->
-                        <div class="eps-year-block">
+                        <!-- <div class="eps-year-block">
                             <div class="eps-year-header">
                                 <div class="eps-year-title">2024</div>
                                 <div class="eps-annual">
@@ -450,10 +491,10 @@
                                     <div class="quarter-growth positive">+8.5%</div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- 2023 -->
-                        <div class="eps-year-block">
+                        <!-- <div class="eps-year-block">
                             <div class="eps-year-header">
                                 <div class="eps-year-title">2023</div>
                                 <div class="eps-annual">
@@ -483,10 +524,10 @@
                                     <div class="quarter-growth positive">+8.3%</div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- 2022 -->
-                        <div class="eps-year-block">
+                        <!-- <div class="eps-year-block">
                             <div class="eps-year-header">
                                 <div class="eps-year-title">2022</div>
                                 <div class="eps-annual">
@@ -516,10 +557,10 @@
                                     <div class="quarter-growth positive">+11.1%</div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- 2021 -->
-                        <div class="eps-year-block">
+                        <!-- <div class="eps-year-block">
                             <div class="eps-year-header">
                                 <div class="eps-year-title">2021</div>
                                 <div class="eps-annual">
@@ -554,9 +595,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-      <div class="collapse-section">
+    <div class="collapse-section">
             <div class="collapse-header" onclick="toggleCollapse(this)">
                 <div class="collapse-title">
                     Informasi Perusahaan
@@ -567,34 +608,30 @@
                 <div class="content-inner">
                     <div class="info-row">
                         <span class="info-label">Sektor</span>
-                        <span class="info-value">Finansial</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Sub-Sektor</span>
-                        <span class="info-value">Perbankan</span>
+                        <span class="info-value">{{ saham.sektor|upper }}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">Market Cap</span>
-                        <span class="info-value highlight">Rp 1.265 T</span>
+                        <span class="info-value highlight">{{ saham.market_cap|intword }}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">Jumlah Saham Beredar</span>
-                        <span class="info-value">123,5 Miliar</span>
+                        <span class="info-value">{{ saham.shares_outstanding|intcomma }} lembar</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">Tanggal IPO</span>
-                        <span class="info-value">31 Mei 2000</span>
+                        <span class="info-value">{{ saham.firt_trade_date }}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">Papan</span>
-                        <span class="info-value">Utama</span>
+                        <span class="info-value">{{ saham.papan_pencatatan }}</span>
                     </div>
                 </div>
             </div>
         </div>
 
 
-         <section class="top-movers">
+    <section class="top-movers">
                 <div class="mover-item">
                     <span class="mover-tag">{{ saham.symbol }}</span>
                     <span class="mover-name">{{ saham.nama_perusahaan }}</span>
@@ -625,31 +662,10 @@
                     <span class="mover-action"><i class="fas fa-check-circle"></i></span>
                 </div>
                 </section>
-        <p style="color: brown;">Data Palsu, kami masih tahap dalam pengembangan model..</p>
-                <section class="financial-news">
-                    <div class="news-filters">
-                        {% if topics %}
-                        {% for tag in topics %}
-                        <button class="filter-btn active">{{ tag.name }}</button>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                    <div class="news-list">                        
-                    {% for related in related_articles %}
-                        <article class="news-item">
-                            <div class="news-content">
-                                <div class="news-source">{{ related.category }} • {{ related.created_at|date:'d F Y' }}</div>
-                                <h3><a href="{% url 'article_detail' category_slug=related.category.slug unique_id=related.unique_id slug=related.slug %}">{{ related.title }}</a></h3>
-                            </div>
-                            <img src="{{ related.featured_image.url }}" alt="{{ related.title }}" class="news-image">
-                        </article>
-                        {% endfor %}
-                    </div>
-                </section>
             </div>
 
             <aside class="sidebar">
-
+<!-- 
                 <div class="sidebar-card">
                     <h4>Profile Saham {{ saham.symbol }}</h4>
                     <p class="card-description">
@@ -666,7 +682,7 @@
                         <span>{{ saham.firt_trade_date }}</span>
                     </div>
                 </div>
-                </div>
+                </div> -->
                 <div class="sidebar-card">
                     <div class="card-header">
                         <i class="fas fa-chart-pie card-icon-blue"></i>
@@ -696,89 +712,32 @@
                         <button class="filter-chip"><i class="fas fa-dollar-sign"></i> Currencies</button>
                     </div>
                 </div>
-                <div class="sidebar-card">
-                    <h4>Most followed on Google</h4>
-                    <div class="followed-stock-list">
-                        <div class="followed-stock-item">
-                            <div class="followed-stock-info">
-                                <span class="stock-ticker-tag aapl">AAPL</span>
-                                <div class="stock-details">
-                                    <h5>Apple Inc</h5>
-                                    <p>3.71M V</p>
-                                </div>
-                            </div>
-                            <div class="followed-stock-action">
-                                <span class="stock-change-tag down"><i class="fas fa-arrow-down"></i> 0.01%</span>
-                                <button class="add-stock-btn"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="followed-stock-item">
-                            <div class="followed-stock-info">
-                                <span class="stock-ticker-tag googl">BBCA</span>
-                                <div class="stock-details">
-                                    <h5>Alphabet A</h5>
-                                    <p>2.16M v</p>
-                                </div>
-                            </div>
-                            <div class="followed-stock-action">
-                                <span class="stock-change-tag down"><i class="fas fa-arrow-down"></i> 0.26%</span>
-                                <button class="add-stock-btn"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="followed-stock-item">
-                            <div class="followed-stock-info">
-                                <span class="stock-ticker-tag msft">MSFT</span>
-                                <div class="stock-details">
-                                    <h5>Microsoft Corp</h5>
-                                    <p>1.84M </p>
-                                </div>
-                            </div>
-                            <div class="followed-stock-action">
-                                <span class="stock-change-tag down"><i class="fas fa-arrow-down"></i> 2.70%</span>
-                                <button class="add-stock-btn"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="followed-stock-item">
-                            <div class="followed-stock-info">
-                                <span class="stock-ticker-tag amzn">AMZN</span>
-                                <div class="stock-details">
-                                    <h5>Amazon.com Inc</h5>
-                                    <p>1.74M </p>
-                                </div>
-                            </div>
-                            <div class="followed-stock-action">
-                                <span class="stock-change-tag down"><i class="fas fa-arrow-down"></i> 4.43%</span>
-                                <button class="add-stock-btn"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="followed-stock-item">
-                            <div class="followed-stock-info">
-                                <span class="stock-ticker-tag meta">META</span>
-                                <div class="stock-details">
-                                    <h5>Meta Platforms Inc</h5>
-                                    <p>1.58M </p>
-                                </div>
-                            </div>
-                            <div class="followed-stock-action">
-                                <span class="stock-change-tag down"><i class="fas fa-arrow-down"></i> 0.72%</span>
-                                <button class="add-stock-btn"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="followed-stock-item">
-                            <div class="followed-stock-info">
-                                <span class="stock-ticker-tag tsla">TSLA</span>
-                                <div class="stock-details">
-                                    <h5>Tesla Inc</h5>
-                                    <p>1.49M </p>
-                                </div>
-                            </div>
-                            <div class="followed-stock-action">
-                                <span class="stock-change-tag down"><i class="fas fa-arrow-down"></i> 1.88%</span>
-                                <button class="add-stock-btn"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                 <div class="sidebar-card">
+                    <h4>Top Volume Stocks</h4>
+{% for item in top_volumes %}
+        <div class="stock-item">
+            <a href="{% url 'saham_detail' item.symbol %}" class="stock-left-link">
+            <div class="stock-left">
+                <div class="stock-ticker ticker-aapl">{{ item.symbol }}</div>
+                <div class="company-name">{{ item.long_name }}</div>
+                <div class="followers">{{ item.volume|intword }}</div>
+            </div>
+        </a>
+    <div class="stock-right">
+    {% if item.change_pct > 0 %}
+        <div class="percentage positive">+{{ item.change_pct|floatformat:2 }}%</div>
+    {% elif item.change_pct < 0 %}
+        <div class="percentage negative">{{ item.change_pct|floatformat:2 }}%</div>
+    {% else %}
+        <div class="percentage neutral">{{ item.change_pct|floatformat:2 }}%</div>
+    {% endif %}
+</div>
+
+        </div>
+{% endfor %}
+
+
+    </div>
 
             
             </aside>

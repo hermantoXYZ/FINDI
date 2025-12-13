@@ -90,7 +90,7 @@ class Saham(models.Model):
     short_name = models.CharField(max_length=255, null=True, blank=True)
     long_name = models.CharField(max_length=255, null=True, blank=True)
     currency = models.CharField(max_length=10, null=True, blank=True)
-
+ 
     # Profil
     sektor = models.CharField(max_length=100, null=True, blank=True)
     papan_pencatatan = models.CharField(max_length=100, null=True, blank=True)
@@ -150,7 +150,17 @@ class Saham(models.Model):
 
     def __str__(self):
         return f"{self.symbol} - {self.short_name}"
+    
 
+class Dividend(models.Model):
+    saham = models.ForeignKey(Saham, on_delete=models.CASCADE,related_name='dividends')
+    period = models.IntegerField() 
+    dividend = models.FloatField() 
+    ex_date = models.DateField(null=True, blank=True)
+    pay_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.saham.symbol} - {self.period} - {self.dividend}"
 
 class Topic(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

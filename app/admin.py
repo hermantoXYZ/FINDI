@@ -1,10 +1,16 @@
 from django.contrib import admin
 from django.db import models
-from .models import UserAdmin, UserAnggota, Article, Category, Page, Topic, Saham
+from .models import UserAdmin, UserAnggota, Article, Category, Page, Topic, Saham, Dividend
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
-from .admin_resources import UserAnggotaResource
+from .admin_resources import UserAnggotaResource, DividendResource
 from import_export import fields
+
+@admin.register(Dividend)
+class DividendAdmin(ImportExportModelAdmin):
+    resource_class = DividendResource
+    list_display = ('saham', 'period', 'dividend', 'ex_date', 'pay_date')
+    search_fields = ('saham__symbol',)
 
 class SahamResource(resources.ModelResource):
     symbol = fields.Field(attribute="symbol", column_name="symbol")

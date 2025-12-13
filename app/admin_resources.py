@@ -2,7 +2,8 @@ from import_export import resources, fields
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from .models import UserAnggota
+from .models import UserAnggota, Saham, Dividend
+from import_export.widgets import ForeignKeyWidget
 
 
 class UserAnggotaResource(resources.ModelResource):
@@ -47,3 +48,24 @@ class UserAnggotaResource(resources.ModelResource):
                 anggota.photo = photo_value
 
             anggota.save()
+
+
+class DividendResource(resources.ModelResource):
+    saham = fields.Field(
+        column_name='symbol',
+        attribute='saham',
+        widget=ForeignKeyWidget(Saham, 'symbol')
+    )
+
+    class Meta:
+        model = Dividend
+        fields = (
+            'saham',
+            'period',
+            'dividend',
+            'ex_date',
+            'pay_date',
+        )
+        import_id_fields = ('saham', 'period', 'dividend', 'ex_date', 'pay_date')
+        skip_unchanged = True
+        report_skipped = True
